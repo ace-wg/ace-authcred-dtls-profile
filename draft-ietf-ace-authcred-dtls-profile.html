@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Additional Formats of Authentication Credentials for the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE)</title>
+<meta content="Marco Tiloca" name="author">
+<meta content="John Preuß Mattsson" name="author">
+<meta content="
+       This document updates the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430. 
+    " name="description">
+<meta content="xml2rfc 3.25.0" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-ietf-ace-authcred-dtls-profile-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.25.0
+    Python 3.12.8
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.4
+    lxml 5.3.0
+    platformdirs 4.3.6
+    pycountry 24.6.1
+    PyYAML 6.0.2
+    requests 2.32.3
+    setuptools 70.3.0
+    wcwidth 0.2.13
+-->
+<link href="draft-ietf-ace-authcred-dtls-profile.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">Authentication Credentials DTLS profile</td>
+<td class="right">December 2024</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Tiloca &amp; Preuß Mattsson</td>
+<td class="center">Expires 22 June 2025</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">ACE Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-ietf-ace-authcred-dtls-profile-latest</dd>
+<dt class="label-updates">Updates:</dt>
+<dd class="updates">
+<a href="https://www.rfc-editor.org/rfc/rfc9202" class="eref">9202</a> (if approved)</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2024-12-19" class="published">19 December 2024</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Standards Track</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2025-06-22">22 June 2025</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">M. Tiloca</div>
+<div class="org">RISE AB</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Preuß Mattsson</div>
+<div class="org">Ericsson AB</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Additional Formats of Authentication Credentials for the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE)</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document updates the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Discussion of this document takes place on the
+    Authentication and Authorization for Constrained Environments Working Group mailing list (ace@ietf.org),
+    which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/ace/">https://mailarchive.ietf.org/arch/browse/ace/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
+    <span><a href="https://github.com/ace-wg/ace-authcred-dtls-profile">https://github.com/ace-wg/ace-authcred-dtls-profile</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 22 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2024 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-updates-to-the-rpk-mode" class="internal xref">Updates to the RPK Mode</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-certificate-mode" class="internal xref">Certificate Mode</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-examples-2" class="internal xref">Examples</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-examples-with-hybrid-settin" class="internal xref">Examples with Hybrid Settings</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-rpk-mode-raw-public-keys-of" class="internal xref">RPK Mode (Raw Public Keys of Different Formats)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-certificate-mode-certificat" class="internal xref">Certificate Mode (Certificates of Different Formats)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-combination-of-rpk-mode-and" class="internal xref">Combination of RPK Mode and Certificate Mode</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-cddl-model" class="internal xref">CDDL Model</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="intro">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">The Authentication and Authorization for Constrained Environments (ACE) framework <span>[<a href="#RFC9200" class="cite xref">RFC9200</a>]</span> defines an architecture to enforce access control for constrained devices. A client (C) requests an evidence of granted permissions from an authorization server (AS) in the form of an access token, then uploads the access token to the target resource server (RS), and finally accesses protected resources at RS according to what is specified in the access token.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The framework has as main building blocks the OAuth 2.0 framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, the Constrained Application Protocol (CoAP) <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> for message transfer, CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> for compact encoding, and COSE <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span><span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span> for self-contained protection of access tokens.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Separate profile documents define in detail how the participants in the ACE architecture communicate, especially as to the security protocols that they use. In particular, the ACE profile defined in <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> specifies how Datagram Transport Layer Security (DTLS) <span>[<a href="#RFC6347" class="cite xref">RFC6347</a>]</span><span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span> is used to protect communications with transport-layer security in the ACE architecture. The profile has also been extended in <span>[<a href="#RFC9430" class="cite xref">RFC9430</a>]</span>, in order to allow the alternative use of Transport Layer Security (TLS) <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> when CoAP is transported over TCP or WebSockets <span>[<a href="#RFC8323" class="cite xref">RFC8323</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">The DTLS profile <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> allows C and RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines an RPK mode (see <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>), where authentication relies on the public keys of the two peers as raw public keys <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">That is, C specifies its public key to the AS when requesting an access token, and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of RS. Then, C and RS use their asymmetric keys when performing the DTLS handshake, as defined in <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">Per <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, the DTLS profile admits only a COSE Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, or X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, or C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>. In particular, this document updates <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> as follows.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-8.1">
+          <p id="section-1-8.1.1">It extends the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by enabling the use of CCSs to wrap the raw public keys of C and RS (see <a href="#sec-rpk-mode" class="auto internal xref">Section 2</a>).<a href="#section-1-8.1.1" class="pilcrow">¶</a></p>
+<p id="section-1-8.1.2">
+[ TODO: Further extend the RPK mode, by admitting the identification of COSE Keys by reference, using the CWT Confirmation Method 'ckt' defined in https://datatracker.ietf.org/doc/html/draft-ietf-cose-key-thumbprint ]<a href="#section-1-8.1.2" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-1-8.2">
+          <p id="section-1-8.2.1">It defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS (see <a href="#sec-cert-mode" class="auto internal xref">Section 3</a>). In either case, certificates can be transported by value or instead identified by reference.<a href="#section-1-8.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-1-9">When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE Key object or as a CCS, or instead one as a COSE Key object while the other one as a CCS.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-10">When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-1-10" class="pilcrow">¶</a></p>
+<p id="section-1-11">Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.<a href="#section-1-11" class="pilcrow">¶</a></p>
+<p id="section-1-12">When using the formats introduced in this document, authentication credentials are transported by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-1-12" class="pilcrow">¶</a></p>
+<p id="section-1-13">What is defined in this document is seamlessly applicable if TLS is used instead, as defined in <span>[<a href="#RFC9430" class="cite xref">RFC9430</a>]</span>.<a href="#section-1-13" class="pilcrow">¶</a></p>
+<div id="terminology">
+<section id="section-1.1">
+        <h3 id="name-terminology">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Readers are expected to be familiar with the terms and concepts described in the ACE framework for Authentication and Authorization <span>[<a href="#RFC9200" class="cite xref">RFC9200</a>]</span><span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> and its DTLS profile <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, as well as with terms and concepts related to CBOR Web Tokens (CWTs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> and CWT Confirmation Methods <span>[<a href="#RFC8747" class="cite xref">RFC8747</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">The terminology for entities in the considered architecture is defined in OAuth 2.0 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>. In particular, this includes client (C), resource server (RS), and authorization server (AS).<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">Readers are also expected to be familiar with the terms and concepts related to CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>, CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>, CDDL <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>, COSE <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span><span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, the DTLS protocol suite <span>[<a href="#RFC6347" class="cite xref">RFC6347</a>]</span><span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span>, and the use of raw public keys in DTLS <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">Note that the term "endpoint" is used here following its OAuth definition, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at RS. This document does not use the CoAP definition of "endpoint", which is "An entity participating in the CoAP protocol."<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-6">This document also refers to the term "authentication credential", which denotes the information associated with an entity, including that entity's public key and parameters associated with the public key. Examples of authentication credentials are CWT Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, and C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+<p id="section-1.1-7">Examples throughout this document are expressed in CBOR diagnostic notation as defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Diagnostic notation comments are often used to provide a textual representation of the parameters' keys and values.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
+<p id="section-1.1-8">In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 13</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. For example, {e'x5chain' : h'3081...cb02'} stands for {5 : h'3081...cb02'}.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
+<p id="section-1.1-9">Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 13</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. Finally, please delete this note.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-rpk-mode">
+<section id="section-2">
+      <h2 id="name-updates-to-the-rpk-mode">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-updates-to-the-rpk-mode" class="section-name selfRef">Updates to the RPK Mode</a>
+      </h2>
+<p id="section-2-1">This section updates the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by defining how the raw public key of C and RS can be provided as wrapped by a CCS <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, instead of as a COSE Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">If the raw public key of C is wrapped by a CCS, then the following applies.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2-3.1">
+          <p id="section-2-3.1.1">The payload of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.<a href="#section-2-3.1.1" class="pilcrow">¶</a></p>
+<p id="section-2-3.1.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.1.2" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-2-3.2">
+          <p id="section-2-3.2.1">The content of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "cnf" claim of the access token <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+<p id="section-2-3.2.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.2.2" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-2-4">If the raw public key of RS is wrapped by a CCS, then the following applies.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2-5.1">
+          <p id="section-2-5.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of RS.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
+<p id="section-2-5.1.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of RS as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of RS associated with the public key of RS, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-5.1.2" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-2-6">For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE Key object as per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<div id="examples">
+<section id="section-2.1">
+        <h3 id="name-examples">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+        </h3>
+<p id="section-2.1-1"><a href="#fig-example-C-to-AS-ccs" class="auto internal xref">Figure 1</a> shows an example of Access Token Request from C to the AS.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-exampl"></span><div id="fig-example-C-to-AS-ccs">
+<figure id="figure-1">
+          <div class="alignLeft art-text artwork" id="section-2.1-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       e'kccs' : {
+         / sub / 2 : "42-50-31-FF-EF-37-32-39",
+         / cnf / 8 : {
+           / COSE_Key / 1 : {
+             / kty /    1 : 2 / EC2 /,
+             / crv /   -1 : 1 / P-256 /,
+             / x /     -2 : h'd7cc072de2205bdc1537a543d53c60a6
+                              acb62eccd890c7fa27c9e354089bbe13',
+             / y /     -3 : h'f95e1d4b851a2cc80fff87d8e23f22af
+                              b725d535e515d020731e79a3b4e47120'
+           }
+         }
+       }
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-access-token-request-exampl" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.1-3"><a href="#fig-example-AS-to-C-ccs" class="auto internal xref">Figure 2</a> shows an example of Access Token Response from the AS to C.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-examp"></span><div id="fig-example-AS-to-C-ccs">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-2.1-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...643b',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's RPK in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'kccs' : {
+         / sub / 2 : "AA-BB-CC-00-01-02-03-04",
+         / cnf / 8 : {
+           / COSE_Key / 1 : {
+             / kty /  1 : 2 / EC2 /,
+             / crv / -1 : 1 / P-256 /,
+             / x /   -2 : h'bbc34960526ea4d32e940cad2a234148
+                            ddc21791a12afbcbac93622046dd44f0',
+             / y /   -3 : h'4519e257236b2a0ce2023f0931f1f386
+                            ca7afda64fcde0108c224c51eabf6072'
+           }
+         }
+       }
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-access-token-response-examp" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-cert-mode">
+<section id="section-3">
+      <h2 id="name-certificate-mode">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-certificate-mode" class="section-name selfRef">Certificate Mode</a>
+      </h2>
+<p id="section-3-1">This section defines a new certificate mode of the DTLS profile, which enables the use of public certificates to specify the public keys of C and RS. Compared to the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> and extended in <a href="#sec-rpk-mode" class="auto internal xref">Section 2</a> of this document, the certificate mode displays the differences compiled below.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">The authentication credential of C and/or RS is a public certificate, i.e., an X.509 certificate <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> or a C509 certificate <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-3.1">
+          <p id="section-3-3.1.1">The CWT Confirmation Methods "x5chain", "x5bag", "c5c", and "c5b" defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span> are used to transport such authentication credentials by value.<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-3-3.2">
+          <p id="section-3-3.2.1">The CWT Confirmation Methods "x5t", "x5u", "c5t", and "c5u" defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span> are used to identify such authentication credentials by reference.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-3-4">If the authentication credential AUTH_CRED_C of C is a public certificate, then the following applies.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-5.1">
+          <p id="section-3-5.1.1">The "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) specifies AUTH_CRED_C as follows.<a href="#section-3-5.1.1" class="pilcrow">¶</a></p>
+<p id="section-3-5.1.2">
+If AUTH_CRED_C is an X.509 certificate, the "req_cnf" parameter <span class="bcp14">MUST</span> specify:<a href="#section-3-5.1.2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-5.1.3.1">
+              <p id="section-3-5.1.3.1.1">An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-5.1.3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-5.1.3.2">
+              <p id="section-3-5.1.3.2.1">An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-5.1.3.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3-5.1.4">
+If AUTH_CRED_C is a C509 certificate, the "req_cnf" parameter <span class="bcp14">MUST</span> specify:<a href="#section-3-5.1.4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-5.1.5.1">
+              <p id="section-3-5.1.5.1.1">A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-5.1.5.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-5.1.5.2">
+              <p id="section-3-5.1.5.2.1">A "c5t" or "c5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-5.1.5.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="section-3-5.2">
+          <p id="section-3-5.2.1">The "cnf" claim of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) specifies AUTH_CRED_C as follows.<a href="#section-3-5.2.1" class="pilcrow">¶</a></p>
+<p id="section-3-5.2.2">
+If AUTH_CRED_C is an X.509 certificate, the "cnf" claim <span class="bcp14">MUST</span> specify:<a href="#section-3-5.2.2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-5.2.3.1">
+              <p id="section-3-5.2.3.1.1">An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-5.2.3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-5.2.3.2">
+              <p id="section-3-5.2.3.2.1">An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-5.2.3.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3-5.2.4">
+If AUTH_CRED_C is a C509 certificate, the "cnf" claim <span class="bcp14">MUST</span> specify:<a href="#section-3-5.2.4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-5.2.5.1">
+              <p id="section-3-5.2.5.1.1">A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-5.2.5.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-5.2.5.2">
+              <p id="section-3-5.2.5.2.1">A "c5t" or "c5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-5.2.5.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+      </ul>
+<p id="section-3-6">If the authentication credential AUTH_CRED_RS of RS is a public certificate, then the following applies.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1">
+          <p id="section-3-7.1.1">The "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> of the Access Token Response specifies AUTH_CRED_RS as follows.<a href="#section-3-7.1.1" class="pilcrow">¶</a></p>
+<p id="section-3-7.1.2">
+If AUTH_CRED_RS is an X.509 certificate, the "rs_cnf" parameter <span class="bcp14">MUST</span> specify:<a href="#section-3-7.1.2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1.3.1">
+              <p id="section-3-7.1.3.1.1">An "x5chain" or "x5bag" structure, in case AUTH_CRED_RS is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-7.1.3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-7.1.3.2">
+              <p id="section-3-7.1.3.2.1">An "x5t" or "x5u" structure, in case AUTH_CRED_RS is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-7.1.3.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3-7.1.4">
+If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14">MUST</span> specify:<a href="#section-3-7.1.4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3-7.1.5.1">
+              <p id="section-3-7.1.5.1.1">A "c5c" or "c5b" structure, in case AUTH_CRED_RS is transported by value within a certificate chain or a certificate bag, respectively; or<a href="#section-3-7.1.5.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3-7.1.5.2">
+              <p id="section-3-7.1.5.2.1">A "c5t" or "c5u" structure, in case AUTH_CRED_RS is identified by reference through a hash value (a thumbprint) or a URI <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, respectively.<a href="#section-3-7.1.5.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+      </ul>
+<p id="section-3-8">For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the structures "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>, together with their identifiers.<a href="#section-3-8" class="pilcrow">¶</a></p>
+<p id="section-3-9">When using either of the structures, the specified authentication credential is just the end-entity certificate.<a href="#section-3-9" class="pilcrow">¶</a></p>
+<p id="section-3-10">As per <span>[<a href="#RFC6347" class="cite xref">RFC6347</a>]</span> and <span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span>, a public certificate is specified in the Certificate message of the DTLS handshake. For X.509 certificates, the TLS Certificate Type is "X509", as defined in <span>[<a href="#RFC6091" class="cite xref">RFC6091</a>]</span>. For C509 certificates, the TLS certificate type is "C509 Certificate", as defined in <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-3-10" class="pilcrow">¶</a></p>
+<p id="section-3-11">It is not required that AUTH_CRED_C and AUTH_CRED_RS are both X.509 certificates or both C509 certificates. Also, it is not required that AUTH_CRED_C and AUTH_CRED_RS are both transported by value or both identified by reference.<a href="#section-3-11" class="pilcrow">¶</a></p>
+<p id="section-3-12">Finally, one of the two authentication credentials can be a public certificate, while the other one can be a raw public key. This is consistent with the admitted, combined use of raw public keys and certificates, as discussed in <span><a href="https://rfc-editor.org/rfc/rfc7250#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-3-12" class="pilcrow">¶</a></p>
+<div id="examples-1">
+<section id="section-3.1">
+        <h3 id="name-examples-2">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-examples-2" class="section-name selfRef">Examples</a>
+        </h3>
+<p id="section-3.1-1"><a href="#fig-example-C-to-AS-x509" class="auto internal xref">Figure 3</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example"></span><div id="fig-example-C-to-AS-x509">
+<figure id="figure-3">
+          <div class="alignLeft art-text artwork" id="section-3.1-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       e'x5chain' : h'3081ee3081a1a003020102020462319ec430
+                      0506032b6570301d311b301906035504030c
+                      124544484f4320526f6f7420456432353531
+                      39301e170d3232303331363038323433365a
+                      170d3239313233313233303030305a302231
+                      20301e06035504030c174544484f43205265
+                      73706f6e6465722045643235353139302a30
+                      0506032b6570032100a1db47b95184854ad1
+                      2a0c1a354e418aace33aa0f2c662c00b3ac5
+                      5de92f9359300506032b6570034100b723bc
+                      01eab0928e8b2b6c98de19cc3823d46e7d69
+                      87b032478fecfaf14537a1af14cc8be829c6
+                      b73044101837eb4abc949565d86dce51cfae
+                      52ab82c152cb02'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-access-token-request-example" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-exampl"></span><div id="fig-example-AS-to-C-x509">
+<figure id="figure-4">
+          <div class="alignLeft art-text artwork" id="section-3.1-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...2fa6',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'x5chain' : h'3081ee3081a1a003020102020462319ea030
+                      0506032b6570301d311b301906035504030c
+                      124544484f4320526f6f7420456432353531
+                      39301e170d3232303331363038323430305a
+                      170d3239313233313233303030305a302231
+                      20301e06035504030c174544484f4320496e
+                      69746961746f722045643235353139302a30
+                      0506032b6570032100ed06a8ae61a829ba5f
+                      a54525c9d07f48dd44a302f43e0f23d8cc20
+                      b73085141e300506032b6570034100521241
+                      d8b3a770996bcfc9b9ead4e7e0a1c0db353a
+                      3bdf2910b39275ae48b756015981850d27db
+                      6734e37f67212267dd05eeff27b9e7a813fa
+                      574b72a00b430b'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-access-token-response-exampl" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-5">The following shows a variation of the two previous examples, where the same X.509 certificates are instead identified by reference.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6"><a href="#fig-example-C-to-AS-x509-ref" class="auto internal xref">Figure 5</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its own X.509 certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-"></span><div id="fig-example-C-to-AS-x509-ref">
+<figure id="figure-5">
+          <div class="alignLeft art-text artwork" id="section-3.1-7.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       e'x5t' : [-15, h'79f2a41b510c1f9b']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-access-token-request-example-" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-8"><a href="#fig-example-AS-to-C-x509-ref" class="auto internal xref">Figure 6</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5t" structure, identifying by reference the X.509 certificate of RS.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example"></span><div id="fig-example-AS-to-C-x509-ref">
+<figure id="figure-6">
+          <div class="alignLeft art-text artwork" id="section-3.1-9.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...2fa6',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'x5t' : [-15, h'c24ab2fd7643c79f']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-access-token-response-example" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-security-considerations">
+<section id="section-4">
+      <h2 id="name-security-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-4-1">The security considerations from <span>[<a href="#RFC9200" class="cite xref">RFC9200</a>]</span> and <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> apply to this document as well.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">When using public certificates as authentication credentials, the security considerations from <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.2" class="relref">Appendix C.2</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> apply.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">When using X.509 certificates as authentication credentials, the security considerations from <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, <span>[<a href="#RFC6818" class="cite xref">RFC6818</a>]</span>, <span>[<a href="#RFC8398" class="cite xref">RFC8398</a>]</span>, and <span>[<a href="#RFC8399" class="cite xref">RFC8399</a>]</span> apply.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">When using C509 certificates as authentication credentials, the security considerations from <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span> apply.<a href="#section-4-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-5">
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-5-1">This document has no actions for IANA.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-6">
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-ace-edhoc-oscore-profile">[I-D.ietf-ace-edhoc-oscore-profile]</dt>
+        <dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, <span class="refAuthor">Tiloca, M.</span>, and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC) and Object Security for Constrained Environments (OSCORE) Profile for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-edhoc-oscore-profile-06</span>, <time datetime="2024-10-21" class="refDate">21 October 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-06">https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cose-cbor-encoded-cert">[I-D.ietf-cose-cbor-encoded-cert]</dt>
+        <dd>
+<span class="refAuthor">Mattsson, J. P.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Raza, S.</span>, <span class="refAuthor">Höglund, J.</span>, and <span class="refAuthor">M. Furuhed</span>, <span class="refTitle">"CBOR Encoded X.509 Certificates (C509 Certificates)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-cbor-encoded-cert-11</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-11">https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-11</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6347">[RFC6347]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span> and <span class="refAuthor">N. Modadugu</span>, <span class="refTitle">"Datagram Transport Layer Security Version 1.2"</span>, <span class="seriesInfo">RFC 6347</span>, <span class="seriesInfo">DOI 10.17487/RFC6347</span>, <time datetime="2012-01" class="refDate">January 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6347">https://www.rfc-editor.org/rfc/rfc6347</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6749">[RFC6749]</dt>
+        <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6818">[RFC6818]</dt>
+        <dd>
+<span class="refAuthor">Yee, P.</span>, <span class="refTitle">"Updates to the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 6818</span>, <span class="seriesInfo">DOI 10.17487/RFC6818</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6818">https://www.rfc-editor.org/rfc/rfc6818</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7250">[RFC7250]</dt>
+        <dd>
+<span class="refAuthor">Wouters, P., Ed.</span>, <span class="refAuthor">Tschofenig, H., Ed.</span>, <span class="refAuthor">Gilmore, J.</span>, <span class="refAuthor">Weiler, S.</span>, and <span class="refAuthor">T. Kivinen</span>, <span class="refTitle">"Using Raw Public Keys in Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)"</span>, <span class="seriesInfo">RFC 7250</span>, <span class="seriesInfo">DOI 10.17487/RFC7250</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7250">https://www.rfc-editor.org/rfc/rfc7250</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7252">[RFC7252]</dt>
+        <dd>
+<span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7252">https://www.rfc-editor.org/rfc/rfc7252</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8323">[RFC8323]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Lemay, S.</span>, <span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Hartke, K.</span>, <span class="refAuthor">Silverajan, B.</span>, and <span class="refAuthor">B. Raymor, Ed.</span>, <span class="refTitle">"CoAP (Constrained Application Protocol) over TCP, TLS, and WebSockets"</span>, <span class="seriesInfo">RFC 8323</span>, <span class="seriesInfo">DOI 10.17487/RFC8323</span>, <time datetime="2018-02" class="refDate">February 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8323">https://www.rfc-editor.org/rfc/rfc8323</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8392">[RFC8392]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8392">https://www.rfc-editor.org/rfc/rfc8392</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8398">[RFC8398]</dt>
+        <dd>
+<span class="refAuthor">Melnikov, A., Ed.</span> and <span class="refAuthor">W. Chuang, Ed.</span>, <span class="refTitle">"Internationalized Email Addresses in X.509 Certificates"</span>, <span class="seriesInfo">RFC 8398</span>, <span class="seriesInfo">DOI 10.17487/RFC8398</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8398">https://www.rfc-editor.org/rfc/rfc8398</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8399">[RFC8399]</dt>
+        <dd>
+<span class="refAuthor">Housley, R.</span>, <span class="refTitle">"Internationalization Updates to RFC 5280"</span>, <span class="seriesInfo">RFC 8399</span>, <span class="seriesInfo">DOI 10.17487/RFC8399</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8399">https://www.rfc-editor.org/rfc/rfc8399</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8446">[RFC8446]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8610">[RFC8610]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8747">[RFC8747]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Seitz, L.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Proof-of-Possession Key Semantics for CBOR Web Tokens (CWTs)"</span>, <span class="seriesInfo">RFC 8747</span>, <span class="seriesInfo">DOI 10.17487/RFC8747</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8747">https://www.rfc-editor.org/rfc/rfc8747</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8949">[RFC8949]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9052">[RFC9052]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9053">[RFC9053]</dt>
+        <dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Initial Algorithms"</span>, <span class="seriesInfo">RFC 9053</span>, <span class="seriesInfo">DOI 10.17487/RFC9053</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9053">https://www.rfc-editor.org/rfc/rfc9053</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9147">[RFC9147]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">N. Modadugu</span>, <span class="refTitle">"The Datagram Transport Layer Security (DTLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 9147</span>, <span class="seriesInfo">DOI 10.17487/RFC9147</span>, <time datetime="2022-04" class="refDate">April 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9147">https://www.rfc-editor.org/rfc/rfc9147</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9200">[RFC9200]</dt>
+        <dd>
+<span class="refAuthor">Seitz, L.</span>, <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Authentication and Authorization for Constrained Environments Using the OAuth 2.0 Framework (ACE-OAuth)"</span>, <span class="seriesInfo">RFC 9200</span>, <span class="seriesInfo">DOI 10.17487/RFC9200</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9200">https://www.rfc-editor.org/rfc/rfc9200</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9201">[RFC9201]</dt>
+        <dd>
+<span class="refAuthor">Seitz, L.</span>, <span class="refTitle">"Additional OAuth Parameters for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="seriesInfo">RFC 9201</span>, <span class="seriesInfo">DOI 10.17487/RFC9201</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9201">https://www.rfc-editor.org/rfc/rfc9201</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9202">[RFC9202]</dt>
+        <dd>
+<span class="refAuthor">Gerdes, S.</span>, <span class="refAuthor">Bergmann, O.</span>, <span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Selander, G.</span>, and <span class="refAuthor">L. Seitz</span>, <span class="refTitle">"Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="seriesInfo">RFC 9202</span>, <span class="seriesInfo">DOI 10.17487/RFC9202</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9202">https://www.rfc-editor.org/rfc/rfc9202</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9430">[RFC9430]</dt>
+      <dd>
+<span class="refAuthor">Bergmann, O.</span>, <span class="refAuthor">Preuß Mattsson, J.</span>, and <span class="refAuthor">G. Selander</span>, <span class="refTitle">"Extension of the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE) to Transport Layer Security (TLS)"</span>, <span class="seriesInfo">RFC 9430</span>, <span class="seriesInfo">DOI 10.17487/RFC9430</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9430">https://www.rfc-editor.org/rfc/rfc9430</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC6091">[RFC6091]</dt>
+      <dd>
+<span class="refAuthor">Mavrogiannopoulos, N.</span> and <span class="refAuthor">D. Gillmor</span>, <span class="refTitle">"Using OpenPGP Keys for Transport Layer Security (TLS) Authentication"</span>, <span class="seriesInfo">RFC 6091</span>, <span class="seriesInfo">DOI 10.17487/RFC6091</span>, <time datetime="2011-02" class="refDate">February 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6091">https://www.rfc-editor.org/rfc/rfc6091</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="ssec-example-hybrid">
+<section id="appendix-A">
+      <h2 id="name-examples-with-hybrid-settin">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-examples-with-hybrid-settin" class="section-name selfRef">Examples with Hybrid Settings</a>
+      </h2>
+<p id="appendix-A-1">This section provides additional examples where, within the same ACE execution workflow, C and RS use different formats of raw public keys (see <a href="#ssec-example-hybrid-1" class="auto internal xref">Appendix A.1</a>), or different formats of certificates (see <a href="#ssec-example-hybrid-2" class="auto internal xref">Appendix A.2</a>), or a combination of the RPK mode and certificate mode (see <a href="#ssec-example-hybrid-3" class="auto internal xref">Appendix A.3</a>).<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="ssec-example-hybrid-1">
+<section id="appendix-A.1">
+        <h3 id="name-rpk-mode-raw-public-keys-of">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-rpk-mode-raw-public-keys-of" class="section-name selfRef">RPK Mode (Raw Public Keys of Different Formats)</a>
+        </h3>
+<p id="appendix-A.1-1"><a href="#fig-example-C-to-AS-cose-key" class="auto internal xref">Figure 7</a> shows an example of Access Token Request from C to the AS, where the public key of C is conveyed as a COSE Key.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-f"></span><div id="fig-example-C-to-AS-cose-key">
+<figure id="figure-7">
+          <div class="alignLeft art-text artwork" id="appendix-A.1-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       / COSE_Key / 1 : {
+         / kty /    1 : 2 / EC2 /,
+         / crv /   -1 : 1 / P-256 /,
+         / x /     -2 : h'd7cc072de2205bdc1537a543d53c60a6
+                          acb62eccd890c7fa27c9e354089bbe13',
+         / y /     -3 : h'f95e1d4b851a2cc80fff87d8e23f22af
+                          b725d535e515d020731e79a3b4e47120'
+       }
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-access-token-request-example-f" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Conveyed as a COSE Key within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.1-3"><a href="#fig-example-AS-to-C-ccs-2" class="auto internal xref">Figure 8</a> shows an example of Access Token Response from the AS to C, where the public key of RS is wrapped by a CCS.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-"></span><div id="fig-example-AS-to-C-ccs-2">
+<figure id="figure-8">
+          <div class="alignLeft art-text artwork" id="appendix-A.1-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...c41a',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's RPK in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'kccs' : {
+         / sub / 2 : "DD-EE-FF-05-06-07-08-09",
+         / cnf / 8 : {
+           / COSE_Key / 1 : {
+             / kty /  1 : 2 / EC2 /,
+             / crv / -1 : 1 / P-256 /,
+             / x /   -2 : h'ac75e9ece3e50bfc8ed6039988952240
+                            5c47bf16df96660a41298cb4307f7eb6',
+             / y /   -3 : h'6e5de611388a4b8a8211334ac7d37ecb
+                            52a387d257e6db3c2a93df21ff3affc8'
+           }
+         }
+       }
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-access-token-response-example-" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="ssec-example-hybrid-2">
+<section id="appendix-A.2">
+        <h3 id="name-certificate-mode-certificat">
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-certificate-mode-certificat" class="section-name selfRef">Certificate Mode (Certificates of Different Formats)</a>
+        </h3>
+<p id="appendix-A.2-1"><a href="#fig-example-C-to-AS-x509-2" class="auto internal xref">Figure 9</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-fo"></span><div id="fig-example-C-to-AS-x509-2">
+<figure id="figure-9">
+          <div class="alignLeft art-text artwork" id="appendix-A.2-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       e'x5chain' : h'308201383081dea003020102020301f50d30
+                      0a06082a8648ce3d04030230163114301206
+                      035504030c0b524643207465737420434130
+                      1e170d3233303130313030303030305a170d
+                      3236303130313030303030305a3022312030
+                      1e06035504030c1730312d32332d34352d46
+                      462d46452d36372d38392d41423059301306
+                      072a8648ce3d020106082a8648ce3d030107
+                      03420004b1216ab96e5b3b3340f5bdf02e69
+                      3f16213a04525ed44450b1019c2dfd3838ab
+                      ac4e14d86c0983ed5e9eef2448c6861cc406
+                      547177e6026030d051f7792ac206a30f300d
+                      300b0603551d0f040403020780300a06082a
+                      8648ce3d0403020349003046022100d4320b
+                      1d6849e309219d30037e138166f2508247dd
+                      dae76cceea55053c108e90022100d551f6d6
+                      0106f1abb484cfbe6256c178e4ac3314ea19
+                      191e8b607da5ae3bda16'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-access-token-request-example-fo" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.2-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of a "c5c" structure, transporting by value only the C509 certificate of RS.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-f"></span><div id="fig-example-AS-to-C-c509">
+<figure id="figure-10">
+          <div class="alignLeft art-text artwork" id="appendix-A.2-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...2fa6',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'c5c' : h'03487e7661d7b54e46328a23625553066243
+                  41086b4578616d706c6520496e63096d6365
+                  7274696669636174696f6e016a3830322e31
+                  41522043411a5c52dc0cf68c236255530662
+                  434105624c41086b6578616d706c6520496e
+                  630963496f542266577431323334015821fd
+                  c8b421f11c25e47e3ac57123bf2d9fdc494f
+                  028bc351cc80c03f150bf50cff958a042101
+                  5496600d8716bf7fd0e752d0ac760777ad66
+                  5d02a0075468d16551f951bfc82a431d0d9f
+                  08bc2d205b1160210503822082492b060104
+                  01b01f0a014401020304005840c0d81996d2
+                  507d693f3c48eaa5ee9491bda6db214099d9
+                  8117c63b361374cd86a774989f4c321a5cf2
+                  5d832a4d336a08ad67df20f1506421188a0a
+                  de6d349236'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-access-token-response-example-f" class="selfRef">Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="ssec-example-hybrid-3">
+<section id="appendix-A.3">
+        <h3 id="name-combination-of-rpk-mode-and">
+<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-combination-of-rpk-mode-and" class="section-name selfRef">Combination of RPK Mode and Certificate Mode</a>
+        </h3>
+<p id="appendix-A.3-1"><a href="#fig-example-C-to-AS-ccs-2" class="auto internal xref">Figure 11</a> shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for"></span><div id="fig-example-C-to-AS-ccs-2">
+<figure id="figure-11">
+          <div class="alignLeft art-text artwork" id="appendix-A.3-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       e'kccs' : {
+         / sub / 2 : "55-11-44-AB-CD-EF-00-00",
+         / cnf / 8 : {
+           / COSE_Key / 1 : {
+             / kty /    1 : 2 / EC2 /,
+             / crv /   -1 : 1 / P-256 /,
+             / x /     -2 : h'cd4177ba62433375ede279b5e18e8b91
+                              bc3ed8f1e174474a26fc0edb44ea5373',
+             / y /     -3 : h'a0391de29c5c5badda610d4e301eaaa1
+                              8422367722289cd18cbe6624e89b9cfd'
+           }
+         }
+       }
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-access-token-request-example-for" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.3-3"><a href="#fig-example-AS-to-C-x509-3" class="auto internal xref">Figure 12</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-fo"></span><div id="fig-example-AS-to-C-x509-3">
+<figure id="figure-12">
+          <div class="alignLeft art-text artwork" id="appendix-A.3-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...0f7b',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'x5chain' : h'3082023d308201e2a00302010202087e7661
+                      d7b54e4632300a06082a8648ce3d04030230
+                      5d310b3009060355040613025553310b3009
+                      06035504080c02434131143012060355040a
+                      0c0b4578616d706c6520496e633116301406
+                      0355040b0c0d63657274696669636174696f
+                      6e3113301106035504030c0a3830322e3141
+                      522043413020170d31393031333131313239
+                      31365a180f39393939313233313233353935
+                      395a305c310b300906035504061302555331
+                      0b300906035504080c024341310b30090603
+                      5504070c024c4131143012060355040a0c0b
+                      6578616d706c6520496e63310c300a060355
+                      040b0c03496f54310f300d06035504051306
+                      5774313233343059301306072a8648ce3d02
+                      0106082a8648ce3d03010703420004c8b421
+                      f11c25e47e3ac57123bf2d9fdc494f028bc3
+                      51cc80c03f150bf50cff958d75419d81a6a2
+                      45dffae790be95cf75f602f9152618f816a2
+                      b23b5638e59fd9a3818a3081873009060355
+                      1d1304023000301d0603551d0e0416041496
+                      600d8716bf7fd0e752d0ac760777ad665d02
+                      a0301f0603551d2304183016801468d16551
+                      f951bfc82a431d0d9f08bc2d205b1160300e
+                      0603551d0f0101ff0404030205a0302a0603
+                      551d1104233021a01f06082b060105050708
+                      04a013301106092b06010401b43b0a010404
+                      01020304300a06082a8648ce3d0403020349
+                      003046022100c0d81996d2507d693f3c48ea
+                      a5ee9491bda6db214099d98117c63b361374
+                      cd86022100a774989f4c321a5cf25d832a4d
+                      336a08ad67df20f1506421188a0ade6d3492
+                      36'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-access-token-response-example-fo" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-cddl-model">
+<section id="appendix-B">
+      <h2 id="name-cddl-model">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-cddl-model" class="section-name selfRef">CDDL Model</a>
+      </h2>
+<p id="appendix-B-1">This section is to be removed before publishing as an RFC.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<span id="name-cddl-model-2"></span><div id="fig-cddl-model">
+<figure id="figure-13">
+        <div class="alignLeft art-CDDL art-text artwork" id="appendix-B-2.1">
+<pre>
+; CWT Confirmation Methods
+x5chain = 5
+x5t = 7
+c5c = 9
+kccs = 14
+</pre>
+</div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-cddl-model-2" class="selfRef">CDDL model</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-C">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-C-1">The authors sincerely thank <span class="contact-name">Rikard Höglund</span> and <span class="contact-name">Göran Selander</span> for their comments and feedback.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2">This work was supported by the Sweden's Innovation Agency VINNOVA within the EUREKA CELTIC-NEXT project CYPRESS; and by the H2020 project SIFIS-Home (Grant agreement 952652).<a href="#appendix-C-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-D">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Marco Tiloca</span></div>
+<div dir="auto" class="left"><span class="org">RISE AB</span></div>
+<div dir="auto" class="left"><span class="street-address">Isafjordsgatan 22</span></div>
+<div dir="auto" class="left">SE-<span class="postal-code">164 40</span> <span class="locality">Kista</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Sweden</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:marco.tiloca@ri.se" class="email">marco.tiloca@ri.se</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">John Preuß Mattsson</span></div>
+<div dir="auto" class="left"><span class="org">Ericsson AB</span></div>
+<div dir="auto" class="left">SE-<span class="postal-code">164 80</span> <span class="locality">Stockholm</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Sweden</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:john.mattsson@ericsson.com" class="email">john.mattsson@ericsson.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
