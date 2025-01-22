@@ -106,7 +106,7 @@ When using the certificate mode, the certificates of C and RS do not have to be 
 
 Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.
 
-When using the formats introduced in this document, authentication credentials are transported by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
+When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
 What is defined in this document is seamlessly applicable if TLS is used instead, as defined in {{RFC9430}}.
 
