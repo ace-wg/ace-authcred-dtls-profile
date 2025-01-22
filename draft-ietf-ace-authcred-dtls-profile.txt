@@ -1011,10 +1011,10 @@ Appendix B.  CDDL Model
    This section is to be removed before publishing as an RFC.
 
    ; CWT Confirmation Methods
-   x5chain = 5
-   x5t = 7
-   c5c = 9
-   kccs = 14
+   x5chain = 6
+   x5t = 8
+   c5c = 10
+   kccs = 15
 
                            Figure 13: CDDL model
 
@@ -1023,6 +1023,9 @@ Appendix C.  Document Updates
    This section is to be removed before publishing as an RFC.
 
 C.1.  Version -00 to -01
+
+   *  Changed CBOR abbreviations to not collide with existing
+      codepoints.
 
    *  Updated references.
 
