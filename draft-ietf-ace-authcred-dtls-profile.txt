@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 22 June 2025                                   19 December 2024
+Expires: 26 July 2025                                    22 January 2025
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -52,11 +52,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 June 2025.
+   This Internet-Draft will expire on 26 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -86,6 +86,8 @@ Table of Contents
      A.2.  Certificate Mode (Certificates of Different Formats)
      A.3.  Combination of RPK Mode and Certificate Mode
    Appendix B.  CDDL Model
+   Appendix C.  Document Updates
+     C.1.  Version -00 to -01
    Acknowledgments
    Authors' Addresses
 
@@ -605,8 +607,8 @@ Table of Contents
    security considerations from Appendix C.2 of [RFC8446] apply.
 
    When using X.509 certificates as authentication credentials, the
-   security considerations from [RFC5280], [RFC6818], [RFC8398], and
-   [RFC8399] apply.
+   security considerations from [RFC5280], [RFC6818], [RFC9598],
+   [RFC9549], [RFC9608], and [RFC9618] apply.
 
    When using C509 certificates as authentication credentials, the
    security considerations from [I-D.ietf-cose-cbor-encoded-cert] apply.
@@ -633,9 +635,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-11, 8 July 2024,
+              ietf-cose-cbor-encoded-cert-12, 8 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-11>.
+              cbor-encoded-cert-12>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -690,15 +692,6 @@ Table of Contents
    [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
               "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
               May 2018, <https://www.rfc-editor.org/rfc/rfc8392>.
-
-   [RFC8398]  Melnikov, A., Ed. and W. Chuang, Ed., "Internationalized
-              Email Addresses in X.509 Certificates", RFC 8398,
-              DOI 10.17487/RFC8398, May 2018,
-              <https://www.rfc-editor.org/rfc/rfc8398>.
-
-   [RFC8399]  Housley, R., "Internationalization Updates to RFC 5280",
-              RFC 8399, DOI 10.17487/RFC8399, May 2018,
-              <https://www.rfc-editor.org/rfc/rfc8399>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
@@ -758,6 +751,24 @@ Table of Contents
               Constrained Environments (ACE) to Transport Layer Security
               (TLS)", RFC 9430, DOI 10.17487/RFC9430, July 2023,
               <https://www.rfc-editor.org/rfc/rfc9430>.
+
+   [RFC9549]  Housley, R., "Internationalization Updates to RFC 5280",
+              RFC 9549, DOI 10.17487/RFC9549, March 2024,
+              <https://www.rfc-editor.org/rfc/rfc9549>.
+
+   [RFC9598]  Melnikov, A., Chuang, W., and C. Bonnell,
+              "Internationalized Email Addresses in X.509 Certificates",
+              RFC 9598, DOI 10.17487/RFC9598, May 2024,
+              <https://www.rfc-editor.org/rfc/rfc9598>.
+
+   [RFC9608]  Housley, R., Okubo, T., and J. Mandel, "No Revocation
+              Available for X.509 Public Key Certificates", RFC 9608,
+              DOI 10.17487/RFC9608, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9608>.
+
+   [RFC9618]  Benjamin, D., "Updates to X.509 Policy Validation",
+              RFC 9618, DOI 10.17487/RFC9618, August 2024,
+              <https://www.rfc-editor.org/rfc/rfc9618>.
 
 6.2.  Informative References
 
@@ -1006,6 +1017,16 @@ Appendix B.  CDDL Model
    kccs = 14
 
                            Figure 13: CDDL model
+
+Appendix C.  Document Updates
+
+   This section is to be removed before publishing as an RFC.
+
+C.1.  Version -00 to -01
+
+   *  Updated references.
+
+   *  Editorial improvements.
 
 Acknowledgments
 
