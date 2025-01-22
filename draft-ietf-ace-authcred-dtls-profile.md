@@ -16,11 +16,6 @@ submissiontype: IETF
 updates: 9202
 
 coding: utf-8
-pi:    # can use array (if all yes) or hash here
-
-  toc: yes
-  sortrefs:   # defaults to yes
-  symrefs: yes
 
 author:
       -
@@ -54,8 +49,7 @@ normative:
   RFC7252:
   RFC8323:
   RFC8392:
-  RFC8398:
-  RFC8399:
+  RFC9549:
   RFC8446:
   RFC8610:
   RFC8747:
@@ -67,6 +61,9 @@ normative:
   RFC9201:
   RFC9202:
   RFC9430:
+  RFC9598:
+  RFC9608:
+  RFC9618:
 
 informative:
   RFC6091:
@@ -392,7 +389,7 @@ The security considerations from {{RFC9200}} and {{RFC9202}} apply to this docum
 
 When using public certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
 
-When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC8398}}, and {{RFC8399}} apply.
+When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9598}}, {{RFC9549}}, {{RFC9608}}, and {{RFC9618}} apply.
 
 When using C509 certificates as authentication credentials, the security considerations from {{I-D.ietf-cose-cbor-encoded-cert}} apply.
 
@@ -623,6 +620,15 @@ c5c = 9
 kccs = 14
 ~~~~~~~~~~~~~~~~~~~~
 {: #fig-cddl-model title="CDDL model" artwork-align="left"}
+
+# Document Updates # {#sec-document-updates}
+{:removeinrfc}
+
+## Version -00 to -01 ## {#sec-00-01}
+
+* Updated references.
+
+* Editorial improvements.
 
 # Acknowledgments # {#acknowledgments}
 {:numbered="false"}
