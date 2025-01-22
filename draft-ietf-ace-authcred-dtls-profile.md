@@ -614,10 +614,10 @@ This section provides additional examples where, within the same ACE execution w
 
 ~~~~~~~~~~~~~~~~~~~~ CDDL
 ; CWT Confirmation Methods
-x5chain = 5
-x5t = 7
-c5c = 9
-kccs = 14
+x5chain = 6
+x5t = 8
+c5c = 10
+kccs = 15
 ~~~~~~~~~~~~~~~~~~~~
 {: #fig-cddl-model title="CDDL model" artwork-align="left"}
 
@@ -625,6 +625,8 @@ kccs = 14
 {:removeinrfc}
 
 ## Version -00 to -01 ## {#sec-00-01}
+
+* Changed CBOR abbreviations to not collide with existing codepoints.
 
 * Updated references.
 
