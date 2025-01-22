@@ -103,8 +103,10 @@ Table of Contents
 
    The framework has as main building blocks the OAuth 2.0 framework
    [RFC6749], the Constrained Application Protocol (CoAP) [RFC7252] for
-   message transfer, CBOR [RFC8949] for compact encoding, and COSE
-   [RFC9052][RFC9053] for self-contained protection of access tokens.
+   message transfer, Concise Binary Object Representation (CBOR)
+   [RFC8949] for compact encoding, and CBOR Object Signing and
+   Encryption (COSE) [RFC9052][RFC9053] for self-contained protection of
+   access tokens.
 
    Separate profile documents define in detail how the participants in
    the ACE architecture communicate, especially as to the security
@@ -202,9 +204,10 @@ Table of Contents
    (C), resource server (RS), and authorization server (AS).
 
    Readers are also expected to be familiar with the terms and concepts
-   related to CoAP [RFC7252], CBOR [RFC8949], CDDL [RFC8610], COSE
-   [RFC9052][RFC9053], the DTLS protocol suite [RFC6347][RFC9147], and
-   the use of raw public keys in DTLS [RFC7250].
+   related to CoAP [RFC7252], CBOR [RFC8949], Concise Data Definition
+   Language (CDDL) [RFC8610], COSE [RFC9052][RFC9053], the DTLS protocol
+   suite [RFC6347][RFC9147], and the use of raw public keys in DTLS
+   [RFC7250].
 
    Note that the term "endpoint" is used here following its OAuth
    definition, aimed at denoting resources such as /token and
@@ -227,7 +230,7 @@ Table of Contents
    In the CBOR diagnostic notation used in this document, constructs of
    the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME
    in the CDDL model shown in Figure 13 of Appendix B.  For example,
-   {e'x5chain' : h'3081...cb02'} stands for {5 : h'3081...cb02'}.
+   {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.
 
    Note to RFC Editor: Please delete the paragraph immediately preceding
    this note.  Also, in the CBOR diagnostic notation used in this
