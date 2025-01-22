@@ -176,7 +176,7 @@ Table of Contents
    a certificate, while the other one is a raw public key.
 
    When using the formats introduced in this document, authentication
-   credentials are transported by means of the CWT Confirmation Methods
+   credentials are specified by means of the CWT Confirmation Methods
    "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and
    "c5u" that are defined in [I-D.ietf-ace-edhoc-oscore-profile].
 
