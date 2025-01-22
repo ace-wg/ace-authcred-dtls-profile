@@ -82,7 +82,7 @@ This document updates the Datagram Transport Layer Security (DTLS) Profile for A
 
 The Authentication and Authorization for Constrained Environments (ACE) framework {{RFC9200}} defines an architecture to enforce access control for constrained devices. A client (C) requests an evidence of granted permissions from an authorization server (AS) in the form of an access token, then uploads the access token to the target resource server (RS), and finally accesses protected resources at RS according to what is specified in the access token.
 
-The framework has as main building blocks the OAuth 2.0 framework {{RFC6749}}, the Constrained Application Protocol (CoAP) {{RFC7252}} for message transfer, CBOR {{RFC8949}} for compact encoding, and COSE {{RFC9052}}{{RFC9053}} for self-contained protection of access tokens.
+The framework has as main building blocks the OAuth 2.0 framework {{RFC6749}}, the Constrained Application Protocol (CoAP) {{RFC7252}} for message transfer, Concise Binary Object Representation (CBOR) {{RFC8949}} for compact encoding, and CBOR Object Signing and Encryption (COSE) {{RFC9052}}{{RFC9053}} for self-contained protection of access tokens.
 
 Separate profile documents define in detail how the participants in the ACE architecture communicate, especially as to the security protocols that they use. In particular, the ACE profile defined in {{RFC9202}} specifies how Datagram Transport Layer Security (DTLS) {{RFC6347}}{{RFC9147}} is used to protect communications with transport-layer security in the ACE architecture. The profile has also been extended in {{RFC9430}}, in order to allow the alternative use of Transport Layer Security (TLS) {{RFC8446}} when CoAP is transported over TCP or WebSockets {{RFC8323}}.
 
@@ -118,7 +118,7 @@ Readers are expected to be familiar with the terms and concepts described in the
 
 The terminology for entities in the considered architecture is defined in OAuth 2.0 {{RFC6749}}. In particular, this includes client (C), resource server (RS), and authorization server (AS).
 
-Readers are also expected to be familiar with the terms and concepts related to CoAP {{RFC7252}}, CBOR {{RFC8949}}, CDDL {{RFC8610}}, COSE {{RFC9052}}{{RFC9053}}, the DTLS protocol suite {{RFC6347}}{{RFC9147}}, and the use of raw public keys in DTLS {{RFC7250}}.
+Readers are also expected to be familiar with the terms and concepts related to CoAP {{RFC7252}}, CBOR {{RFC8949}}, Concise Data Definition Language (CDDL) {{RFC8610}}, COSE {{RFC9052}}{{RFC9053}}, the DTLS protocol suite {{RFC6347}}{{RFC9147}}, and the use of raw public keys in DTLS {{RFC7250}}.
 
 Note that the term "endpoint" is used here following its OAuth definition, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at RS. This document does not use the CoAP definition of "endpoint", which is "An entity participating in the CoAP protocol."
 
@@ -126,7 +126,7 @@ This document also refers to the term "authentication credential", which denotes
 
 Examples throughout this document are expressed in CBOR diagnostic notation as defined in {{Section 8 of RFC8949}} and {{Appendix G of RFC8610}}. Diagnostic notation comments are often used to provide a textual representation of the parameters' keys and values.
 
-In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. For example, {e'x5chain' : h'3081...cb02'} stands for {5 : h'3081...cb02'}.
+In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.
 
 Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. Finally, please delete this note.
 
