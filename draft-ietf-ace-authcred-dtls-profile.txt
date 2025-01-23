@@ -890,38 +890,38 @@ A.2.  Certificate Mode (Certificates of Different Formats)
    by means of a "c5c" structure, transporting by value only the C509
    certificate of RS.
 
-     2.01 Created
-     Content-Format: 19 (application/ace+cbor)
-     Max-Age: 3560
-     Payload:
-     {
-       / access_token / 1 : h'd83dd083...2fa6',
-         / (remainder of CWT omitted for brevity;
-         CWT contains the client's X.509 certificate in the cnf claim) /
-       / expires_in /   2 : 3600,
-       / rs_cnf /      41 : {
-         e'c5c' : h'03487e7661d7b54e46328a23625553066243
-                    41086b4578616d706c6520496e63096d6365
-                    7274696669636174696f6e016a3830322e31
-                    41522043411a5c52dc0cf68c236255530662
-                    434105624c41086b6578616d706c6520496e
-                    630963496f542266577431323334015821fd
-                    c8b421f11c25e47e3ac57123bf2d9fdc494f
-                    028bc351cc80c03f150bf50cff958a042101
-                    5496600d8716bf7fd0e752d0ac760777ad66
-                    5d02a0075468d16551f951bfc82a431d0d9f
-                    08bc2d205b1160210503822082492b060104
-                    01b01f0a014401020304005840c0d81996d2
-                    507d693f3c48eaa5ee9491bda6db214099d9
-                    8117c63b361374cd86a774989f4c321a5cf2
-                    5d832a4d336a08ad67df20f1506421188a0a
-                    de6d349236'
-       }
-     }
+      2.01 Created
+      Content-Format: 19 (application/ace+cbor)
+      Max-Age: 3560
+      Payload:
+      {
+        / access_token / 1 : h'd83dd083...2fa6',
+          / (remainder of CWT omitted for brevity;
+          CWT contains the client's C509 certificate in the cnf claim) /
+        / expires_in /   2 : 3600,
+        / rs_cnf /      41 : {
+          e'c5c' : h'03487e7661d7b54e46328a23625553066243
+                     41086b4578616d706c6520496e63096d6365
+                     7274696669636174696f6e016a3830322e31
+                     41522043411a5c52dc0cf68c236255530662
+                     434105624c41086b6578616d706c6520496e
+                     630963496f542266577431323334015821fd
+                     c8b421f11c25e47e3ac57123bf2d9fdc494f
+                     028bc351cc80c03f150bf50cff958a042101
+                     5496600d8716bf7fd0e752d0ac760777ad66
+                     5d02a0075468d16551f951bfc82a431d0d9f
+                     08bc2d205b1160210503822082492b060104
+                     01b01f0a014401020304005840c0d81996d2
+                     507d693f3c48eaa5ee9491bda6db214099d9
+                     8117c63b361374cd86a774989f4c321a5cf2
+                     5d832a4d336a08ad67df20f1506421188a0a
+                     de6d349236'
+        }
+      }
 
-      Figure 10: Access Token Response Example for Certificate Mode
-       with a C509 Certificate as Authentication Credential of RS,
-                   Transported by Value within "rs_cnf"
+       Figure 10: Access Token Response Example for Certificate Mode
+        with a C509 Certificate as Authentication Credential of RS,
+                    Transported by Value within "rs_cnf"
 
 A.3.  Combination of RPK Mode and Certificate Mode
 
@@ -1029,6 +1029,8 @@ C.1.  Version -00 to -01
 
    *  Changed CBOR abbreviations to not collide with existing
       codepoints.
+
+   *  Fixes in the examples in CBOR diagnostic notation.
 
    *  Updated references.
 
