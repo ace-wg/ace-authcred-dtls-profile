@@ -504,7 +504,7 @@ This section provides additional examples where, within the same ACE execution w
    {
      / access_token / 1 : h'd83dd083...2fa6',
        / (remainder of CWT omitted for brevity;
-       CWT contains the client's X.509 certificate in the cnf claim) /
+       CWT contains the client's C509 certificate in the cnf claim) /
      / expires_in /   2 : 3600,
      / rs_cnf /      41 : {
        e'c5c' : h'03487e7661d7b54e46328a23625553066243
@@ -627,6 +627,8 @@ kccs = 15
 ## Version -00 to -01 ## {#sec-00-01}
 
 * Changed CBOR abbreviations to not collide with existing codepoints.
+
+* Fixes in the examples in CBOR diagnostic notation.
 
 * Updated references.
 
