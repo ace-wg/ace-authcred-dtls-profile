@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 26 July 2025                                    22 January 2025
+Expires: 27 July 2025                                    23 January 2025
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -17,7 +17,7 @@ Expires: 26 July 2025                                    22 January 2025
 Abstract
 
    This document updates the Datagram Transport Layer Security (DTLS)
-   Profile for Authentication and Authorization for Constrained
+   profile for Authentication and Authorization for Constrained
    Environments (ACE).  In particular, it specifies the use of
    additional formats of authentication credentials for establishing a
    DTLS session, when peer authentication is based on asymmetric
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 July 2025.
+   This Internet-Draft will expire on 27 July 2025.
 
 Copyright Notice
 
@@ -131,7 +131,7 @@ Table of Contents
    their asymmetric keys when performing the DTLS handshake, as defined
    in [RFC7250].
 
-   Per [RFC9202], the DTLS profile admits only a COSE Key object
+   Per [RFC9202], the DTLS profile admits only a COSE_Key object
    [RFC9052] as the format of authentication credentials to use for
    transporting the public keys of C and RS, as raw public keys.
    However, it is desirable to enable additional formats of
@@ -162,8 +162,8 @@ Table of Contents
 
    When using the updated RPK mode, the raw public keys of C and RS do
    not have to be of the same format.  That is, it is possible to have
-   both public keys as a COSE Key object or as a CCS, or instead one as
-   a COSE Key object while the other one as a CCS.
+   both public keys as a COSE_Key object or as a CCS, or instead one as
+   a COSE_Key object while the other one as a CCS.
 
    When using the certificate mode, the certificates of C and RS do not
    have to be of the same format.  That is, it is possible to have both
@@ -242,7 +242,7 @@ Table of Contents
 
    This section updates the RPK mode defined in Section 3.2 of
    [RFC9202], by defining how the raw public key of C and RS can be
-   provided as wrapped by a CCS [RFC8392], instead of as a COSE Key
+   provided as wrapped by a CCS [RFC8392], instead of as a COSE_Key
    object [RFC9052].  Note that only the differences from [RFC9202] are
    compiled below.
 
@@ -256,7 +256,7 @@ Table of Contents
       that has to be bound to the access token.
 
       In particular, the CCS MUST include the "cnf" claim specifying the
-      public key of C as a COSE Key object, SHOULD include the "sub"
+      public key of C as a COSE_Key object, SHOULD include the "sub"
       claim specifying the subject name of C associated with the public
       key of C, and MAY include additional claims.
 
@@ -268,7 +268,7 @@ Table of Contents
       bound to the access token.
 
       In particular, the CCS MUST include the "cnf" claim specifying the
-      public key of C as a COSE Key object, SHOULD include the "sub"
+      public key of C as a COSE_Key object, SHOULD include the "sub"
       claim specifying the subject name of C associated with the public
       key of C, and MAY include additional claims.
 
@@ -281,7 +281,7 @@ Table of Contents
       CCS specifying the public key of RS.
 
       In particular, the CCS MUST include the "cnf" claim specifying the
-      public key of RS as a COSE Key object, SHOULD include the "sub"
+      public key of RS as a COSE_Key object, SHOULD include the "sub"
       claim specifying the subject name of RS associated with the public
       key of RS, and MAY include additional claims.
 
@@ -292,7 +292,7 @@ Table of Contents
 
    It is not required that both public keys are wrapped by a CCS.  That
    is, one of the two authentication credentials can be a CCS, while the
-   other one can be a COSE Key object as per Section 3.2 of [RFC9202].
+   other one can be a COSE_Key object as per Section 3.2 of [RFC9202].
 
 2.1.  Examples
 

@@ -8,7 +8,7 @@
 <meta content="Marco Tiloca" name="author">
 <meta content="John Preuß Mattsson" name="author">
 <meta content="
-       This document updates the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430. 
+       This document updates the Datagram Transport Layer Security (DTLS) profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430. 
     " name="description">
 <meta content="xml2rfc 3.25.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1049,7 +1049,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Tiloca &amp; Preuß Mattsson</td>
-<td class="center">Expires 26 July 2025</td>
+<td class="center">Expires 27 July 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc9202" class="eref">9202</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-01-22" class="published">22 January 2025</time>
+<time datetime="2025-01-23" class="published">23 January 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-07-26">26 July 2025</time></dd>
+<dd class="expires"><time datetime="2025-07-27">27 July 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1087,7 +1087,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Additional Formats of Authentication Credentials for the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document updates the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document updates the Datagram Transport Layer Security (DTLS) profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1119,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1234,7 +1234,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-3">Separate profile documents define in detail how the participants in the ACE architecture communicate, especially as to the security protocols that they use. In particular, the ACE profile defined in <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> specifies how Datagram Transport Layer Security (DTLS) <span>[<a href="#RFC6347" class="cite xref">RFC6347</a>]</span><span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span> is used to protect communications with transport-layer security in the ACE architecture. The profile has also been extended in <span>[<a href="#RFC9430" class="cite xref">RFC9430</a>]</span>, in order to allow the alternative use of Transport Layer Security (TLS) <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> when CoAP is transported over TCP or WebSockets <span>[<a href="#RFC8323" class="cite xref">RFC8323</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The DTLS profile <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> allows C and RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines an RPK mode (see <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>), where authentication relies on the public keys of the two peers as raw public keys <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">That is, C specifies its public key to the AS when requesting an access token, and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of RS. Then, C and RS use their asymmetric keys when performing the DTLS handshake, as defined in <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">Per <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, the DTLS profile admits only a COSE Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-6">Per <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, the DTLS profile admits only a COSE_Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, or X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, or C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>. In particular, this document updates <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> as follows.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-8.1">
@@ -1246,7 +1246,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <p id="section-1-8.2.1">It defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS (see <a href="#sec-cert-mode" class="auto internal xref">Section 3</a>). In either case, certificates can be transported by value or instead identified by reference.<a href="#section-1-8.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-9">When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE Key object or as a CCS, or instead one as a COSE Key object while the other one as a CCS.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-9">When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-1-10" class="pilcrow">¶</a></p>
 <p id="section-1-11">Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.<a href="#section-1-11" class="pilcrow">¶</a></p>
 <p id="section-1-12">When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-1-12" class="pilcrow">¶</a></p>
@@ -1277,18 +1277,18 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
       <h2 id="name-updates-to-the-rpk-mode">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-updates-to-the-rpk-mode" class="section-name selfRef">Updates to the RPK Mode</a>
       </h2>
-<p id="section-2-1">This section updates the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by defining how the raw public key of C and RS can be provided as wrapped by a CCS <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, instead of as a COSE Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">This section updates the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by defining how the raw public key of C and RS can be provided as wrapped by a CCS <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, instead of as a COSE_Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">If the raw public key of C is wrapped by a CCS, then the following applies.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2-3.1">
           <p id="section-2-3.1.1">The payload of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.<a href="#section-2-3.1.1" class="pilcrow">¶</a></p>
 <p id="section-2-3.1.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.1.2" class="pilcrow">¶</a></p>
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.1.2" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-2-3.2">
           <p id="section-2-3.2.1">The content of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "cnf" claim of the access token <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 <p id="section-2-3.2.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.2.2" class="pilcrow">¶</a></p>
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.2.2" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-2-4">If the raw public key of RS is wrapped by a CCS, then the following applies.<a href="#section-2-4" class="pilcrow">¶</a></p>
@@ -1296,11 +1296,11 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
 <li class="normal" id="section-2-5.1">
           <p id="section-2-5.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of RS.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
 <p id="section-2-5.1.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of RS as a COSE Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of RS associated with the public key of RS, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-5.1.2" class="pilcrow">¶</a></p>
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of RS as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of RS associated with the public key of RS, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-5.1.2" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-2-6">For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<p id="section-2-7">It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE Key object as per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<p id="section-2-7">It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object as per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>.<a href="#section-2-7" class="pilcrow">¶</a></p>
 <div id="examples">
 <section id="section-2.1">
         <h3 id="name-examples">
