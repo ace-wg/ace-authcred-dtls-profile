@@ -73,7 +73,7 @@ entity:
 
 --- abstract
 
-This document updates the Datagram Transport Layer Security (DTLS) Profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430.
+This document updates the Datagram Transport Layer Security (DTLS) profile for Authentication and Authorization for Constrained Environments (ACE). In particular, it specifies the use of additional formats of authentication credentials for establishing a DTLS session, when peer authentication is based on asymmetric cryptography. Therefore, this document updates RFC 9202. What is defined in this document is seamlessly applicable also if the profile uses Transport Layer Security (TLS) instead, as defined in RFC 9430.
 
 
 --- middle
@@ -90,7 +90,7 @@ The DTLS profile {{RFC9202}} allows C and RS to establish a DTLS session with pe
 
 That is, C specifies its public key to the AS when requesting an access token, and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of RS. Then, C and RS use their asymmetric keys when performing the DTLS handshake, as defined in {{RFC7250}}.
 
-Per {{RFC9202}}, the DTLS profile admits only a COSE Key object {{RFC9052}} as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.
+Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.
 
 This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, or X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}. In particular, this document updates {{RFC9202}} as follows.
 
@@ -100,7 +100,7 @@ This document enables such additional formats in the DTLS profile, by defining h
 
 * It defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS (see {{sec-cert-mode}}). In either case, certificates can be transported by value or instead identified by reference.
 
-When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE Key object or as a CCS, or instead one as a COSE Key object while the other one as a CCS.
+When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS.
 
 When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
@@ -132,27 +132,27 @@ Note to RFC Editor: Please delete the paragraph immediately preceding this note.
 
 # Updates to the RPK Mode # {#sec-rpk-mode}
 
-This section updates the RPK mode defined in {{Section 3.2 of RFC9202}}, by defining how the raw public key of C and RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
+This section updates the RPK mode defined in {{Section 3.2 of RFC9202}}, by defining how the raw public key of C and RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE_Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
 
 If the raw public key of C is wrapped by a CCS, then the following applies.
 
 * The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.
 
-  In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
+  In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
 
 * The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.
 
-  In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
+  In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
 
 If the raw public key of RS is wrapped by a CCS, then the following applies.
 
 * The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of RS.
 
-  In particular, the CCS MUST include the "cnf" claim specifying the public key of RS as a COSE Key object, SHOULD include the "sub" claim specifying the subject name of RS associated with the public key of RS, and MAY include additional claims.
+  In particular, the CCS MUST include the "cnf" claim specifying the public key of RS as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of RS associated with the public key of RS, and MAY include additional claims.
 
 For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
-It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE Key object as per {{Section 3.2 of RFC9202}}.
+It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object as per {{Section 3.2 of RFC9202}}.
 
 ## Examples
 
