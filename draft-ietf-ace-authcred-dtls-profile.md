@@ -64,6 +64,14 @@ normative:
   RFC9598:
   RFC9608:
   RFC9618:
+  RFC9679:
+  SHA-256:
+    author:
+      org: NIST
+    title: Secure Hash Standard
+    seriesinfo: FIPS 180-3
+    date: 2008-10
+    target: http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf
 
 informative:
   RFC6091:
@@ -92,15 +100,21 @@ That is, C specifies its public key to the AS when requesting an access token, a
 
 Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.
 
-This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, or X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}. In particular, this document updates {{RFC9202}} as follows.
+This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, or X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
 
-* It extends the RPK mode defined in {{Section 3.2 of RFC9202}}, by enabling the use of CCSs to wrap the raw public keys of C and RS (see {{sec-rpk-mode}}).
+This document also enables the DTLS profile to use the CWT Confirmation Method 'ckt' defined in {{RFC9679}} when using a COSE_Key object as raw public key, thus allowing to identifying the COSE_Key object by reference, alternatively to transporting it by value.
 
-  \[ TODO: Further extend the RPK mode, by admitting the identification of COSE Keys by reference, using the CWT Confirmation Method 'ckt' defined in https://datatracker.ietf.org/doc/html/draft-ietf-cose-key-thumbprint \]
+In particular, this document updates {{RFC9202}} as follows.
 
-* It defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS (see {{sec-cert-mode}}). In either case, certificates can be transported by value or instead identified by reference.
+* {{sec-rpk-mode}} of this document extends the RPK mode defined in {{Section 3.2 of RFC9202}}, by enabling:
 
-When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS.
+  - The use of CCSs to wrap the raw public keys of C and RS (see {{sec-rpk-mode-kccs}}).
+
+  - The use of the CWT Confirmation Method 'ckt' to identify by reference a COSE_Key object used as authentication credential (see {{sec-rpk-mode-ckt}}).
+
+* {{sec-cert-mode}} of this document defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS. In either case, certificates can be transported by value or instead identified by reference.
+
+When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS. When both raw public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
 When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
@@ -132,7 +146,11 @@ Note to RFC Editor: Please delete the paragraph immediately preceding this note.
 
 # Updates to the RPK Mode # {#sec-rpk-mode}
 
-This section updates the RPK mode defined in {{Section 3.2 of RFC9202}}, by defining how the raw public key of C and RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE_Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
+This section updates the RPK mode defined in {{Section 3.2 of RFC9202}}, as detailed in the following {{sec-rpk-mode-kccs}} and {{sec-rpk-mode-ckt}}.
+
+## Raw Public Keys as CCSs # {#sec-rpk-mode-kccs}
+
+This section defines how the raw public key of C and RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE_Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
 
 If the raw public key of C is wrapped by a CCS, then the following applies.
 
@@ -152,9 +170,9 @@ If the raw public key of RS is wrapped by a CCS, then the following applies.
 
 For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
-It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object as per {{Section 3.2 of RFC9202}}.
+It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object transported by value as per {{Section 3.2 of RFC9202}} or identified by reference as per {{sec-rpk-mode-ckt}} of this document.
 
-## Examples
+### Examples
 
 {{fig-example-C-to-AS-ccs}} shows an example of Access Token Request from C to the AS.
 
@@ -182,7 +200,7 @@ It is not required that both public keys are wrapped by a CCS. That is, one of t
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-C-to-AS-ccs title="Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within \"req_cnf\""}
+{: #fig-example-C-to-AS-ccs title="Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS conveyed within \"req_cnf\""}
 
 {{fig-example-AS-to-C-ccs}} shows an example of Access Token Response from the AS to C.
 
@@ -213,7 +231,68 @@ It is not required that both public keys are wrapped by a CCS. That is, one of t
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-ccs title="Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within \"rs_cnf\""}
+{: #fig-example-AS-to-C-ccs title="Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS, Conveyed within \"rs_cnf\""}
+
+## Raw Public Keys as COSE\_Keys Identified by Reference # {#sec-rpk-mode-ckt}
+
+As per {{Section 3.2 of RFC9202}}, COSE_Key objects {{RFC9052}} used as raw public keys are transported by value in the Access Token Request and Response messages, as well as within access tokens.
+
+This section extends the DTLS profile by allowing to identifying those COSE_Key objects by reference, alternatively to transporting those by value. Note that only the differences from {{RFC9202}} are compiled below.
+
+The following relies on the CWT Confirmation Method 'ckt' defined in {{RFC9679}}. When using a 'ckt' structure, this conveys the thumbprint of a COSE_Key object computed as per {{Section 3 of RFC9679}}. In particular, the used hash function MUST be SHA-256 {{SHA-256}}, which is mandatory to support when supporting COSE Key thumbprints.
+
+If the raw public key of C is a COSE_Key object COSE_KEY_C and the intent is to identify it by reference, then the following applies.
+
+* The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
+
+* The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
+
+If the raw public key of RS is a COSE_Key object COSE_KEY_RS and the intent is to identify it by reference, then the following applies.
+
+* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.
+
+When both public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
+
+Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure MUST NOT be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in {{sec-rpk-mode-kccs}}.
+
+### Examples
+
+{{fig-example-C-to-AS-ckt}} shows an example of Access Token Request from C to the AS.
+
+~~~~~~~~~~~
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       / ckt / 5 : h'd3550f1b5b763ee09d058fc7aef69900
+                     1279903a4a15bdc3953d32b10f7cb8b1'
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-C-to-AS-ckt title="Access Token Request Example for RPK Mode, with the Public Key of C as a COSE_Key Identified by Reference within \"req_cnf\""}
+
+{{fig-example-AS-to-C-ckt}} shows an example of Access Token Response from the AS to C.
+
+~~~~~~~~~~~
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...643b',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's RPK in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       / ckt / 5 : h'db60f4d371fffac3e1040566154a5c36
+                     1e0bf835a4ad4c58069cf6edc9ac58a3'
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-AS-to-C-ckt title="Access Token Response Example for RPK Mode, with the Public Key of RS as a COSE_Key Identified by Reference within \"rs_cnf\""}
 
 # Certificate Mode # {#sec-cert-mode}
 
@@ -386,6 +465,8 @@ The following shows a variation of the two previous examples, where the same X.5
 # Security Considerations # {#sec-security-considerations}
 
 The security considerations from {{RFC9200}} and {{RFC9202}} apply to this document as well.
+
+When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object as a raw public key, the security considerations from {{RFC9679}} apply.
 
 When using public certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
 
@@ -625,6 +706,8 @@ kccs = 15
 {:removeinrfc}
 
 ## Version -00 to -01 ## {#sec-00-01}
+
+* Enabled use of COSE Keys identified by reference with a thumbprint.
 
 * Changed CBOR abbreviations to not collide with existing codepoints.
 
