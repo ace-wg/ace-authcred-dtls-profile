@@ -340,7 +340,7 @@ Table of Contents
       }
 
        Figure 1: Access Token Request Example for RPK Mode, with the
-         Public Key of C Wrapped by a CCS conveyed within "req_cnf"
+         Public Key of C Wrapped by a CCS Conveyed within "req_cnf"
 
    Figure 2 shows an example of Access Token Response from the AS to C.
 
