@@ -200,7 +200,7 @@ It is not required that both public keys are wrapped by a CCS. That is, one of t
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-C-to-AS-ccs title="Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS conveyed within \"req_cnf\""}
+{: #fig-example-C-to-AS-ccs title="Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS Conveyed within \"req_cnf\""}
 
 {{fig-example-AS-to-C-ccs}} shows an example of Access Token Response from the AS to C.
 
