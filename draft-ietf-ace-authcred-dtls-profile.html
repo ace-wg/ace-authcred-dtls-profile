@@ -1049,7 +1049,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Tiloca &amp; Preuß Mattsson</td>
-<td class="center">Expires 27 July 2025</td>
+<td class="center">Expires 30 July 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc9202" class="eref">9202</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-01-23" class="published">23 January 2025</time>
+<time datetime="2025-01-26" class="published">26 January 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-07-27">27 July 2025</time></dd>
+<dd class="expires"><time datetime="2025-07-30">30 July 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1160,7 +1160,20 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-updates-to-the-rpk-mode" class="internal xref">Updates to the RPK Mode</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-raw-public-keys-as-ccss" class="internal xref">Raw Public Keys as CCSs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
+                    <p id="section-toc.1-1.2.2.1.2.1.1" class="keepWithNext"><a href="#section-2.1.1" class="auto internal xref">2.1.1</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-raw-public-keys-as-cose_key" class="internal xref">Raw Public Keys as COSE_Keys Identified by Reference</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
+                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-examples-2" class="internal xref">Examples</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1168,7 +1181,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-certificate-mode" class="internal xref">Certificate Mode</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-examples-2" class="internal xref">Examples</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-examples-3" class="internal xref">Examples</a></p>
 </li>
             </ul>
 </li>
@@ -1235,22 +1248,30 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-4">The DTLS profile <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> allows C and RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines an RPK mode (see <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>), where authentication relies on the public keys of the two peers as raw public keys <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">That is, C specifies its public key to the AS when requesting an access token, and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of RS. Then, C and RS use their asymmetric keys when performing the DTLS handshake, as defined in <span>[<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">Per <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, the DTLS profile admits only a COSE_Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, or X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, or C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>. In particular, this document updates <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> as follows.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-7">This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, or X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, or C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">This document also enables the DTLS profile to use the CWT Confirmation Method 'ckt' defined in <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> when using a COSE_Key object as raw public key, thus allowing to identifying the COSE_Key object by reference, alternatively to transporting it by value.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">In particular, this document updates <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> as follows.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-8.1">
-          <p id="section-1-8.1.1">It extends the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by enabling the use of CCSs to wrap the raw public keys of C and RS (see <a href="#sec-rpk-mode" class="auto internal xref">Section 2</a>).<a href="#section-1-8.1.1" class="pilcrow">¶</a></p>
-<p id="section-1-8.1.2">
-[ TODO: Further extend the RPK mode, by admitting the identification of COSE Keys by reference, using the CWT Confirmation Method 'ckt' defined in https://datatracker.ietf.org/doc/html/draft-ietf-cose-key-thumbprint ]<a href="#section-1-8.1.2" class="pilcrow">¶</a></p>
+<li class="normal" id="section-1-10.1">
+          <p id="section-1-10.1.1"><a href="#sec-rpk-mode" class="auto internal xref">Section 2</a> of this document extends the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by enabling:<a href="#section-1-10.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-10.1.2.1">
+              <p id="section-1-10.1.2.1.1">The use of CCSs to wrap the raw public keys of C and RS (see <a href="#sec-rpk-mode-kccs" class="auto internal xref">Section 2.1</a>).<a href="#section-1-10.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-1-8.2">
-          <p id="section-1-8.2.1">It defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS (see <a href="#sec-cert-mode" class="auto internal xref">Section 3</a>). In either case, certificates can be transported by value or instead identified by reference.<a href="#section-1-8.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-1-10.1.2.2">
+              <p id="section-1-10.1.2.2.1">The use of the CWT Confirmation Method 'ckt' to identify by reference a COSE_Key object used as authentication credential (see <a href="#sec-rpk-mode-ckt" class="auto internal xref">Section 2.2</a>).<a href="#section-1-10.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+        <li class="normal" id="section-1-10.2">
+          <p id="section-1-10.2.1"><a href="#sec-cert-mode" class="auto internal xref">Section 3</a> of this document defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS. In either case, certificates can be transported by value or instead identified by reference.<a href="#section-1-10.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-9">When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS.<a href="#section-1-9" class="pilcrow">¶</a></p>
-<p id="section-1-10">When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-1-10" class="pilcrow">¶</a></p>
-<p id="section-1-11">Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.<a href="#section-1-11" class="pilcrow">¶</a></p>
-<p id="section-1-12">When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-1-12" class="pilcrow">¶</a></p>
-<p id="section-1-13">What is defined in this document is seamlessly applicable if TLS is used instead, as defined in <span>[<a href="#RFC9430" class="cite xref">RFC9430</a>]</span>.<a href="#section-1-13" class="pilcrow">¶</a></p>
+<p id="section-1-11">When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS. When both raw public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-1-11" class="pilcrow">¶</a></p>
+<p id="section-1-12">When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-1-12" class="pilcrow">¶</a></p>
+<p id="section-1-13">Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.<a href="#section-1-13" class="pilcrow">¶</a></p>
+<p id="section-1-14">When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-1-14" class="pilcrow">¶</a></p>
+<p id="section-1-15">What is defined in this document is seamlessly applicable if TLS is used instead, as defined in <span>[<a href="#RFC9430" class="cite xref">RFC9430</a>]</span>.<a href="#section-1-15" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-1.1">
         <h3 id="name-terminology">
@@ -1266,8 +1287,8 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-1.1-5">Note that the term "endpoint" is used here following its OAuth definition, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at RS. This document does not use the CoAP definition of "endpoint", which is "An entity participating in the CoAP protocol."<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">This document also refers to the term "authentication credential", which denotes the information associated with an entity, including that entity's public key and parameters associated with the public key. Examples of authentication credentials are CWT Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, and C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <p id="section-1.1-7">Examples throughout this document are expressed in CBOR diagnostic notation as defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Diagnostic notation comments are often used to provide a textual representation of the parameters' keys and values.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
-<p id="section-1.1-8">In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 13</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
-<p id="section-1.1-9">Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 13</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. Finally, please delete this note.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
+<p id="section-1.1-8">In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 15</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
+<p id="section-1.1-9">Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 15</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. Finally, please delete this note.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1277,39 +1298,45 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
       <h2 id="name-updates-to-the-rpk-mode">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-updates-to-the-rpk-mode" class="section-name selfRef">Updates to the RPK Mode</a>
       </h2>
-<p id="section-2-1">This section updates the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, by defining how the raw public key of C and RS can be provided as wrapped by a CCS <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, instead of as a COSE_Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">If the raw public key of C is wrapped by a CCS, then the following applies.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2-3.1">
-          <p id="section-2-3.1.1">The payload of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.<a href="#section-2-3.1.1" class="pilcrow">¶</a></p>
-<p id="section-2-3.1.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.1.2" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="section-2-3.2">
-          <p id="section-2-3.2.1">The content of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "cnf" claim of the access token <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
-<p id="section-2-3.2.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-3.2.2" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="section-2-4">If the raw public key of RS is wrapped by a CCS, then the following applies.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2-5.1">
-          <p id="section-2-5.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of RS.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
-<p id="section-2-5.1.2">
-In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of RS as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of RS associated with the public key of RS, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2-5.1.2" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="section-2-6">For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<p id="section-2-7">It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object as per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>.<a href="#section-2-7" class="pilcrow">¶</a></p>
-<div id="examples">
+<p id="section-2-1">This section updates the RPK mode defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, as detailed in the following <a href="#sec-rpk-mode-kccs" class="auto internal xref">Section 2.1</a> and <a href="#sec-rpk-mode-ckt" class="auto internal xref">Section 2.2</a>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="sec-rpk-mode-kccs">
 <section id="section-2.1">
-        <h3 id="name-examples">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+        <h3 id="name-raw-public-keys-as-ccss">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-raw-public-keys-as-ccss" class="section-name selfRef">Raw Public Keys as CCSs</a>
         </h3>
-<p id="section-2.1-1"><a href="#fig-example-C-to-AS-ccs" class="auto internal xref">Figure 1</a> shows an example of Access Token Request from C to the AS.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">This section defines how the raw public key of C and RS can be provided as wrapped by a CCS <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, instead of as a COSE_Key object <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">If the raw public key of C is wrapped by a CCS, then the following applies.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-3.1">
+            <p id="section-2.1-3.1.1">The payload of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.<a href="#section-2.1-3.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-3.1.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2.1-3.1.2" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-3.2">
+            <p id="section-2.1-3.2.1">The content of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "cnf" claim of the access token <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-3.2.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of C as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of C associated with the public key of C, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2.1-3.2.2" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.1-4">If the raw public key of RS is wrapped by a CCS, then the following applies.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-5.1">
+            <p id="section-2.1-5.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "kccs" structure, with value a CCS specifying the public key of RS.<a href="#section-2.1-5.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.1-5.1.2">
+In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim specifying the public key of RS as a COSE_Key object, <span class="bcp14">SHOULD</span> include the "sub" claim specifying the subject name of RS associated with the public key of RS, and <span class="bcp14">MAY</span> include additional claims.<a href="#section-2.1-5.1.2" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.1-6">For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in <span>[<a href="#I-D.ietf-ace-edhoc-oscore-profile" class="cite xref">I-D.ietf-ace-edhoc-oscore-profile</a>]</span>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">It is not required that both public keys are wrapped by a CCS. That is, one of the two authentication credentials can be a CCS, while the other one can be a COSE_Key object transported by value as per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> or identified by reference as per <a href="#sec-rpk-mode-ckt" class="auto internal xref">Section 2.2</a> of this document.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<div id="examples">
+<section id="section-2.1.1">
+          <h4 id="name-examples">
+<a href="#section-2.1.1" class="section-number selfRef">2.1.1. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+          </h4>
+<p id="section-2.1.1-1"><a href="#fig-example-C-to-AS-ccs" class="auto internal xref">Figure 1</a> shows an example of Access Token Request from C to the AS.<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
 <span id="name-access-token-request-exampl"></span><div id="fig-example-C-to-AS-ccs">
 <figure id="figure-1">
-          <div class="alignLeft art-text artwork" id="section-2.1-2.1">
+            <div class="alignLeft art-text artwork" id="section-2.1.1-2.1">
 <pre>
    POST coaps://as.example.com/token
    Content-Format: 19 (application/ace+cbor)
@@ -1336,13 +1363,13 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-access-token-request-exampl" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
-          </figcaption></figure>
+<a href="#name-access-token-request-exampl" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS conveyed within "req_cnf"</a>
+            </figcaption></figure>
 </div>
-<p id="section-2.1-3"><a href="#fig-example-AS-to-C-ccs" class="auto internal xref">Figure 2</a> shows an example of Access Token Response from the AS to C.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-3"><a href="#fig-example-AS-to-C-ccs" class="auto internal xref">Figure 2</a> shows an example of Access Token Response from the AS to C.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
 <span id="name-access-token-response-examp"></span><div id="fig-example-AS-to-C-ccs">
 <figure id="figure-2">
-          <div class="alignLeft art-text artwork" id="section-2.1-4.1">
+            <div class="alignLeft art-text artwork" id="section-2.1.1-4.1">
 <pre>
    2.01 Created
    Content-Format: 19 (application/ace+cbor)
@@ -1372,8 +1399,91 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-access-token-response-examp" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within "rs_cnf"</a>
-          </figcaption></figure>
+<a href="#name-access-token-response-examp" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS, Conveyed within "rs_cnf"</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-rpk-mode-ckt">
+<section id="section-2.2">
+        <h3 id="name-raw-public-keys-as-cose_key">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-raw-public-keys-as-cose_key" class="section-name selfRef">Raw Public Keys as COSE_Keys Identified by Reference</a>
+        </h3>
+<p id="section-2.2-1">As per <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, COSE_Key objects <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> used as raw public keys are transported by value in the Access Token Request and Response messages, as well as within access tokens.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">This section extends the DTLS profile by allowing to identifying those COSE_Key objects by reference, alternatively to transporting those by value. Note that only the differences from <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> are compiled below.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">The following relies on the CWT Confirmation Method 'ckt' defined in <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span>. When using a 'ckt' structure, this conveys the thumbprint of a COSE_Key object computed as per <span><a href="https://rfc-editor.org/rfc/rfc9679#section-3" class="relref">Section 3</a> of [<a href="#RFC9679" class="cite xref">RFC9679</a>]</span>. In particular, the used hash function <span class="bcp14">MUST</span> be SHA-256 <span>[<a href="#SHA-256" class="cite xref">SHA-256</a>]</span>, which is mandatory to support when supporting COSE Key thumbprints.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">If the raw public key of C is a COSE_Key object COSE_KEY_C and the intent is to identify it by reference, then the following applies.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-5.1">
+            <p id="section-2.2-5.1.1">The payload of the Access Token Request (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.1" class="relref">Section 5.8.1</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "req_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.<a href="#section-2.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.2-5.2">
+            <p id="section-2.2-5.2.1">The content of the access token that the AS provides to C in the Access Token Response (see <span><a href="https://rfc-editor.org/rfc/rfc9200#section-5.8.2" class="relref">Section 5.8.2</a> of [<a href="#RFC9200" class="cite xref">RFC9200</a>]</span>) is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "cnf" claim of the access token <span class="bcp14">MUST</span> specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.<a href="#section-2.2-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.2-6">If the raw public key of RS is a COSE_Key object COSE_KEY_RS and the intent is to identify it by reference, then the following applies.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-7.1">
+            <p id="section-2.2-7.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.<a href="#section-2.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-2.2-8">When both public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">Note that the use of COSE Key thumbprints per <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure <span class="bcp14">MUST NOT</span> be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in <a href="#sec-rpk-mode-kccs" class="auto internal xref">Section 2.1</a>.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<div id="examples-1">
+<section id="section-2.2.1">
+          <h4 id="name-examples-2">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-examples-2" class="section-name selfRef">Examples</a>
+          </h4>
+<p id="section-2.2.1-1"><a href="#fig-example-C-to-AS-ckt" class="auto internal xref">Figure 3</a> shows an example of Access Token Request from C to the AS.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example"></span><div id="fig-example-C-to-AS-ckt">
+<figure id="figure-3">
+            <div class="alignLeft art-text artwork" id="section-2.2.1-2.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor4711",
+     / req_cnf /     4 : {
+       / ckt / 5 : h'd3550f1b5b763ee09d058fc7aef69900
+                     1279903a4a15bdc3953d32b10f7cb8b1'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-access-token-request-example" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C as a COSE_Key Identified by Reference within "req_cnf"</a>
+            </figcaption></figure>
+</div>
+<p id="section-2.2.1-3"><a href="#fig-example-AS-to-C-ckt" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-exampl"></span><div id="fig-example-AS-to-C-ckt">
+<figure id="figure-4">
+            <div class="alignLeft art-text artwork" id="section-2.2.1-4.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...643b',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's RPK in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       / ckt / 5 : h'db60f4d371fffac3e1040566154a5c36
+                     1e0bf835a4ad4c58069cf6edc9ac58a3'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-access-token-response-exampl" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS as a COSE_Key Identified by Reference within "rs_cnf"</a>
+            </figcaption></figure>
+</div>
+</section>
 </div>
 </section>
 </div>
@@ -1474,14 +1584,14 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 <p id="section-3-10">As per <span>[<a href="#RFC6347" class="cite xref">RFC6347</a>]</span> and <span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span>, a public certificate is specified in the Certificate message of the DTLS handshake. For X.509 certificates, the TLS Certificate Type is "X509", as defined in <span>[<a href="#RFC6091" class="cite xref">RFC6091</a>]</span>. For C509 certificates, the TLS certificate type is "C509 Certificate", as defined in <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-3-10" class="pilcrow">¶</a></p>
 <p id="section-3-11">It is not required that AUTH_CRED_C and AUTH_CRED_RS are both X.509 certificates or both C509 certificates. Also, it is not required that AUTH_CRED_C and AUTH_CRED_RS are both transported by value or both identified by reference.<a href="#section-3-11" class="pilcrow">¶</a></p>
 <p id="section-3-12">Finally, one of the two authentication credentials can be a public certificate, while the other one can be a raw public key. This is consistent with the admitted, combined use of raw public keys and certificates, as discussed in <span><a href="https://rfc-editor.org/rfc/rfc7250#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC7250" class="cite xref">RFC7250</a>]</span>.<a href="#section-3-12" class="pilcrow">¶</a></p>
-<div id="examples-1">
+<div id="examples-2">
 <section id="section-3.1">
-        <h3 id="name-examples-2">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-examples-2" class="section-name selfRef">Examples</a>
+        <h3 id="name-examples-3">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-examples-3" class="section-name selfRef">Examples</a>
         </h3>
-<p id="section-3.1-1"><a href="#fig-example-C-to-AS-x509" class="auto internal xref">Figure 3</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example"></span><div id="fig-example-C-to-AS-x509">
-<figure id="figure-3">
+<p id="section-3.1-1"><a href="#fig-example-C-to-AS-x509" class="auto internal xref">Figure 5</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-"></span><div id="fig-example-C-to-AS-x509">
+<figure id="figure-5">
           <div class="alignLeft art-text artwork" id="section-3.1-2.1">
 <pre>
    POST coaps://as.example.com/token
@@ -1509,13 +1619,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-access-token-request-example" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-access-token-request-example-" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-exampl"></span><div id="fig-example-AS-to-C-x509">
-<figure id="figure-4">
+<p id="section-3.1-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 6</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example"></span><div id="fig-example-AS-to-C-x509">
+<figure id="figure-6">
           <div class="alignLeft art-text artwork" id="section-3.1-4.1">
 <pre>
    2.01 Created
@@ -1546,14 +1656,14 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-access-token-response-exampl" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-access-token-response-example" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 <p id="section-3.1-5">The following shows a variation of the two previous examples, where the same X.509 certificates are instead identified by reference.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6"><a href="#fig-example-C-to-AS-x509-ref" class="auto internal xref">Figure 5</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its own X.509 certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example-"></span><div id="fig-example-C-to-AS-x509-ref">
-<figure id="figure-5">
+<p id="section-3.1-6"><a href="#fig-example-C-to-AS-x509-ref" class="auto internal xref">Figure 7</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its own X.509 certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-f"></span><div id="fig-example-C-to-AS-x509-ref">
+<figure id="figure-7">
           <div class="alignLeft art-text artwork" id="section-3.1-7.1">
 <pre>
    POST coaps://as.example.com/token
@@ -1569,13 +1679,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-access-token-request-example-" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within "req_cnf"</a>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-access-token-request-example-f" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-8"><a href="#fig-example-AS-to-C-x509-ref" class="auto internal xref">Figure 6</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5t" structure, identifying by reference the X.509 certificate of RS.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-example"></span><div id="fig-example-AS-to-C-x509-ref">
-<figure id="figure-6">
+<p id="section-3.1-8"><a href="#fig-example-AS-to-C-x509-ref" class="auto internal xref">Figure 8</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5t" structure, identifying by reference the X.509 certificate of RS.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-"></span><div id="fig-example-AS-to-C-x509-ref">
+<figure id="figure-8">
           <div class="alignLeft art-text artwork" id="section-3.1-9.1">
 <pre>
    2.01 Created
@@ -1594,8 +1704,8 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
-<a href="#name-access-token-response-example" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-access-token-response-example-" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1608,9 +1718,10 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-4-1">The security considerations from <span>[<a href="#RFC9200" class="cite xref">RFC9200</a>]</span> and <span>[<a href="#RFC9202" class="cite xref">RFC9202</a>]</span> apply to this document as well.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">When using public certificates as authentication credentials, the security considerations from <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.2" class="relref">Appendix C.2</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> apply.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">When using X.509 certificates as authentication credentials, the security considerations from <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, <span>[<a href="#RFC6818" class="cite xref">RFC6818</a>]</span>, <span>[<a href="#RFC9598" class="cite xref">RFC9598</a>]</span>, <span>[<a href="#RFC9549" class="cite xref">RFC9549</a>]</span>, <span>[<a href="#RFC9608" class="cite xref">RFC9608</a>]</span>, and <span>[<a href="#RFC9618" class="cite xref">RFC9618</a>]</span> apply.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">When using C509 certificates as authentication credentials, the security considerations from <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span> apply.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-2">When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object as a raw public key, the security considerations from <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> apply.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">When using public certificates as authentication credentials, the security considerations from <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.2" class="relref">Appendix C.2</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> apply.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">When using X.509 certificates as authentication credentials, the security considerations from <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, <span>[<a href="#RFC6818" class="cite xref">RFC6818</a>]</span>, <span>[<a href="#RFC9598" class="cite xref">RFC9598</a>]</span>, <span>[<a href="#RFC9549" class="cite xref">RFC9549</a>]</span>, <span>[<a href="#RFC9608" class="cite xref">RFC9608</a>]</span>, and <span>[<a href="#RFC9618" class="cite xref">RFC9618</a>]</span> apply.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">When using C509 certificates as authentication credentials, the security considerations from <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span> apply.<a href="#section-4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1741,8 +1852,16 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 <span class="refAuthor">Housley, R.</span>, <span class="refAuthor">Okubo, T.</span>, and <span class="refAuthor">J. Mandel</span>, <span class="refTitle">"No Revocation Available for X.509 Public Key Certificates"</span>, <span class="seriesInfo">RFC 9608</span>, <span class="seriesInfo">DOI 10.17487/RFC9608</span>, <time datetime="2024-06" class="refDate">June 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9608">https://www.rfc-editor.org/rfc/rfc9608</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9618">[RFC9618]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Benjamin, D.</span>, <span class="refTitle">"Updates to X.509 Policy Validation"</span>, <span class="seriesInfo">RFC 9618</span>, <span class="seriesInfo">DOI 10.17487/RFC9618</span>, <time datetime="2024-08" class="refDate">August 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9618">https://www.rfc-editor.org/rfc/rfc9618</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9679">[RFC9679]</dt>
+        <dd>
+<span class="refAuthor">Isobe, K.</span>, <span class="refAuthor">Tschofenig, H.</span>, and <span class="refAuthor">O. Steele</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE) Key Thumbprint"</span>, <span class="seriesInfo">RFC 9679</span>, <span class="seriesInfo">DOI 10.17487/RFC9679</span>, <time datetime="2024-12" class="refDate">December 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9679">https://www.rfc-editor.org/rfc/rfc9679</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SHA-256">[SHA-256]</dt>
+      <dd>
+<span class="refAuthor">NIST</span>, <span class="refTitle">"Secure Hash Standard"</span>, <span class="seriesInfo">FIPS 180-3 </span>, <time datetime="2008-10" class="refDate">October 2008</time>, <span>&lt;<a href="http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf">http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1773,9 +1892,9 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-rpk-mode-raw-public-keys-of">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-rpk-mode-raw-public-keys-of" class="section-name selfRef">RPK Mode (Raw Public Keys of Different Formats)</a>
         </h3>
-<p id="appendix-A.1-1"><a href="#fig-example-C-to-AS-cose-key" class="auto internal xref">Figure 7</a> shows an example of Access Token Request from C to the AS, where the public key of C is conveyed as a COSE Key.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example-f"></span><div id="fig-example-C-to-AS-cose-key">
-<figure id="figure-7">
+<p id="appendix-A.1-1"><a href="#fig-example-C-to-AS-cose-key" class="auto internal xref">Figure 9</a> shows an example of Access Token Request from C to the AS, where the public key of C is conveyed as a COSE Key.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-fo"></span><div id="fig-example-C-to-AS-cose-key">
+<figure id="figure-9">
           <div class="alignLeft art-text artwork" id="appendix-A.1-2.1">
 <pre>
    POST coaps://as.example.com/token
@@ -1797,13 +1916,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-access-token-request-example-f" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Conveyed as a COSE Key within "req_cnf"</a>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-access-token-request-example-fo" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Conveyed as a COSE Key within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="appendix-A.1-3"><a href="#fig-example-AS-to-C-ccs-2" class="auto internal xref">Figure 8</a> shows an example of Access Token Response from the AS to C, where the public key of RS is wrapped by a CCS.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-example-"></span><div id="fig-example-AS-to-C-ccs-2">
-<figure id="figure-8">
+<p id="appendix-A.1-3"><a href="#fig-example-AS-to-C-ccs-2" class="auto internal xref">Figure 10</a> shows an example of Access Token Response from the AS to C, where the public key of RS is wrapped by a CCS.<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-f"></span><div id="fig-example-AS-to-C-ccs-2">
+<figure id="figure-10">
           <div class="alignLeft art-text artwork" id="appendix-A.1-4.1">
 <pre>
    2.01 Created
@@ -1833,8 +1952,8 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
-<a href="#name-access-token-response-example-" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within "rs_cnf"</a>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-access-token-response-example-f" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1844,9 +1963,9 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-certificate-mode-certificat">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-certificate-mode-certificat" class="section-name selfRef">Certificate Mode (Certificates of Different Formats)</a>
         </h3>
-<p id="appendix-A.2-1"><a href="#fig-example-C-to-AS-x509-2" class="auto internal xref">Figure 9</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example-fo"></span><div id="fig-example-C-to-AS-x509-2">
-<figure id="figure-9">
+<p id="appendix-A.2-1"><a href="#fig-example-C-to-AS-x509-2" class="auto internal xref">Figure 11</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for"></span><div id="fig-example-C-to-AS-x509-2">
+<figure id="figure-11">
           <div class="alignLeft art-text artwork" id="appendix-A.2-2.1">
 <pre>
    POST coaps://as.example.com/token
@@ -1878,13 +1997,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
-<a href="#name-access-token-request-example-fo" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-access-token-request-example-for" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="appendix-A.2-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of a "c5c" structure, transporting by value only the C509 certificate of RS.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-example-f"></span><div id="fig-example-AS-to-C-c509">
-<figure id="figure-10">
+<p id="appendix-A.2-3"><a href="#fig-example-AS-to-C-x509" class="auto internal xref">Figure 6</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of a "c5c" structure, transporting by value only the C509 certificate of RS.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-fo"></span><div id="fig-example-AS-to-C-c509">
+<figure id="figure-12">
           <div class="alignLeft art-text artwork" id="appendix-A.2-4.1">
 <pre>
    2.01 Created
@@ -1917,8 +2036,8 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
-<a href="#name-access-token-response-example-f" class="selfRef">Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-access-token-response-example-fo" class="selfRef">Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1928,9 +2047,9 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-combination-of-rpk-mode-and">
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-combination-of-rpk-mode-and" class="section-name selfRef">Combination of RPK Mode and Certificate Mode</a>
         </h3>
-<p id="appendix-A.3-1"><a href="#fig-example-C-to-AS-ccs-2" class="auto internal xref">Figure 11</a> shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example-for"></span><div id="fig-example-C-to-AS-ccs-2">
-<figure id="figure-11">
+<p id="appendix-A.3-1"><a href="#fig-example-C-to-AS-ccs-2" class="auto internal xref">Figure 13</a> shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for-"></span><div id="fig-example-C-to-AS-ccs-2">
+<figure id="figure-13">
           <div class="alignLeft art-text artwork" id="appendix-A.3-2.1">
 <pre>
    POST coaps://as.example.com/token
@@ -1957,13 +2076,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
-<a href="#name-access-token-request-example-for" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-access-token-request-example-for-" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="appendix-A.3-3"><a href="#fig-example-AS-to-C-x509-3" class="auto internal xref">Figure 12</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-example-fo"></span><div id="fig-example-AS-to-C-x509-3">
-<figure id="figure-12">
+<p id="appendix-A.3-3"><a href="#fig-example-AS-to-C-x509-3" class="auto internal xref">Figure 14</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-for"></span><div id="fig-example-AS-to-C-x509-3">
+<figure id="figure-14">
           <div class="alignLeft art-text artwork" id="appendix-A.3-4.1">
 <pre>
    2.01 Created
@@ -2013,8 +2132,8 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
-<a href="#name-access-token-response-example-fo" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-access-token-response-example-for" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -2028,7 +2147,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
       </h2>
 <p id="appendix-B-1">This section is to be removed before publishing as an RFC.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <span id="name-cddl-model-2"></span><div id="fig-cddl-model">
-<figure id="figure-13">
+<figure id="figure-15">
         <div class="alignLeft art-CDDL art-text artwork" id="appendix-B-2.1">
 <pre>
 ; CWT Confirmation Methods
@@ -2038,7 +2157,7 @@ c5c = 10
 kccs = 15
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-cddl-model-2" class="selfRef">CDDL model</a>
         </figcaption></figure>
 </div>
@@ -2057,16 +2176,19 @@ kccs = 15
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-C.1-1.1">
-            <p id="appendix-C.1-1.1.1">Changed CBOR abbreviations to not collide with existing codepoints.<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.1.1">Enabled use of COSE Keys identified by reference with a thumbprint.<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.2">
-            <p id="appendix-C.1-1.2.1">Fixes in the examples in CBOR diagnostic notation.<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.2.1">Changed CBOR abbreviations to not collide with existing codepoints.<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.3">
-            <p id="appendix-C.1-1.3.1">Updated references.<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.3.1">Fixes in the examples in CBOR diagnostic notation.<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.4">
-            <p id="appendix-C.1-1.4.1">Editorial improvements.<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.4.1">Updated references.<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-C.1-1.5">
+            <p id="appendix-C.1-1.5.1">Editorial improvements.<a href="#appendix-C.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
