@@ -1432,7 +1432,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
             <p id="section-2.2-7.1.1">The payload of the Access Token Response is as defined in <span><a href="https://rfc-editor.org/rfc/rfc9202#section-3.2.1" class="relref">Section 3.2.1</a> of [<a href="#RFC9202" class="cite xref">RFC9202</a>]</span>, with the difference that the "rs_cnf" parameter <span>[<a href="#RFC9201" class="cite xref">RFC9201</a>]</span> <span class="bcp14">MUST</span> specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.<a href="#section-2.2-7.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-2.2-8">When both public keys are specified as COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">When both public keys are specified as COSE_Key objects, it is possible to have both transported by value, or both identified by reference, or one transported by value while the other one identified by reference.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
 <p id="section-2.2-9">Note that the use of COSE Key thumbprints per <span>[<a href="#RFC9679" class="cite xref">RFC9679</a>]</span> is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure <span class="bcp14">MUST NOT</span> be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in <a href="#sec-rpk-mode-kccs" class="auto internal xref">Section 2.1</a> of this document.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
 <div id="examples-1">
 <section id="section-2.2.1">
@@ -1458,7 +1458,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-access-token-request-example" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Identified by Reference within "req_cnf"</a>
+<a href="#name-access-token-request-example" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Object Identified by Reference within "req_cnf"</a>
             </figcaption></figure>
 </div>
 <p id="section-2.2.1-3"><a href="#fig-example-AS-to-C-ckt" class="auto internal xref">Figure 4</a> shows an example of Access Token Response from the AS to C.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
@@ -1483,7 +1483,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-access-token-response-exampl" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of the RS Specified as a COSE_Key Identified by Reference within "rs_cnf"</a>
+<a href="#name-access-token-response-exampl" class="selfRef">Access Token Response Example for RPK Mode, with the Public Key of the RS Specified as a COSE_Key Object Identified by Reference within "rs_cnf"</a>
             </figcaption></figure>
 </div>
 </section>

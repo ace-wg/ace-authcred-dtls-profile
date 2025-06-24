@@ -419,8 +419,8 @@ Table of Contents
       parameter [RFC9201] MUST specify a "ckt" structure, with value the
       thumbprint of COSE_KEY_RS.
 
-   When both public keys are specified as COSE_Keys, it is possible to
-   have both COSE_Keys transported by value, or both identified by
+   When both public keys are specified as COSE_Key objects, it is
+   possible to have both transported by value, or both identified by
    reference, or one transported by value while the other one identified
    by reference.
 
@@ -448,8 +448,8 @@ Table of Contents
       }
 
        Figure 3: Access Token Request Example for RPK Mode, with the
-      Public Key of C Specified as a COSE_Key Identified by Reference
-                              within "req_cnf"
+        Public Key of C Specified as a COSE_Key Object Identified by
+                         Reference within "req_cnf"
 
    Figure 4 shows an example of Access Token Response from the AS to C.
 
@@ -469,7 +469,7 @@ Table of Contents
       }
 
        Figure 4: Access Token Response Example for RPK Mode, with the
-         Public Key of the RS Specified as a COSE_Key Identified by
+     Public Key of the RS Specified as a COSE_Key Object Identified by
                          Reference within "rs_cnf"
 
 3.  Certificate Mode
