@@ -180,7 +180,7 @@ It is not required that both public keys are wrapped by a CCS. That is, one of t
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor1",
      / req_cnf /     4 : {
        e'kccs' : {
          / sub / 2 : "42-50-31-FF-EF-37-32-39",
@@ -263,7 +263,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor2",
      / req_cnf /     4 : {
        / ckt / 5 : h'd3550f1b5b763ee09d058fc7aef69900
                      1279903a4a15bdc3953d32b10f7cb8b1'
@@ -280,7 +280,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...643b',
+     / access_token / 1 : h'd83dd083...5532',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's RPK in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -360,7 +360,7 @@ Finally, one of the two authentication credentials can be a public key certifica
 
 ## Examples
 
-{{fig-example-C-to-AS-x509}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.
+{{fig-example-C-to-AS-x509}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its X.509 certificate.
 
 ~~~~~~~~~~~
    POST coaps://as.example.com/token
@@ -368,7 +368,7 @@ Finally, one of the two authentication credentials can be a public key certifica
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor3",
      / req_cnf /     4 : {
        e'x5chain' : h'3081ee3081a1a003020102020462319ec430
                       0506032b6570301d311b301906035504030c
@@ -421,9 +421,9 @@ Finally, one of the two authentication credentials can be a public key certifica
 ~~~~~~~~~~~
 {: #fig-example-AS-to-C-x509 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
-The following shows a variation of the two previous examples, where the same X.509 certificates are instead identified by reference.
+The following shows a variation of the two previous examples, where the X.509 certificates used as authentication credentials are instead identified by reference.
 
-{{fig-example-C-to-AS-x509-ref}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its own X.509 certificate.
+{{fig-example-C-to-AS-x509-ref}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.
 
 ~~~~~~~~~~~
    POST coaps://as.example.com/token
@@ -431,7 +431,7 @@ The following shows a variation of the two previous examples, where the same X.5
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor4",
      / req_cnf /     4 : {
        e'x5t' : [-15, h'79f2a41b510c1f9b']
        / SHA-2 256-bit Hash truncated to 64-bits /
@@ -448,7 +448,7 @@ The following shows a variation of the two previous examples, where the same X.5
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...2fa6',
+     / access_token / 1 : h'd83dd083...cda0',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's X.509 certificate in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -458,7 +458,7 @@ The following shows a variation of the two previous examples, where the same X.5
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-x509-ref title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
+{: #fig-example-AS-to-C-x509-ref title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Identified by Reference within \"rs_cnf\""}
 
 # Security Considerations # {#sec-security-considerations}
 
@@ -492,7 +492,7 @@ This section provides additional examples where, within the same ACE execution w
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor5",
      / req_cnf /     4 : {
        / COSE_Key / 1 : {
          / kty /    1 : 2 / EC2 /,
@@ -540,7 +540,7 @@ This section provides additional examples where, within the same ACE execution w
 
 ## Certificate Mode (Certificates of Different Formats) # {#ssec-example-hybrid-2}
 
-{{fig-example-C-to-AS-x509-2}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.
+{{fig-example-C-to-AS-x509-2}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its X.509 certificate.
 
 ~~~~~~~~~~~
    POST coaps://as.example.com/token
@@ -548,7 +548,7 @@ This section provides additional examples where, within the same ACE execution w
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor6",
      / req_cnf /     4 : {
        e'x5chain' : h'308201383081dea003020102020301f50d30
                       0a06082a8648ce3d04030230163114301206
@@ -581,7 +581,7 @@ This section provides additional examples where, within the same ACE execution w
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...2fa6',
+     / access_token / 1 : h'd83dd083...001a',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's C509 certificate in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -607,6 +607,45 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-AS-to-C-c509 title="Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
+The following shows a variation of the two previous examples, where the certificates used as authentication credentials are instead identified by reference.
+
+{{fig-example-C-to-AS-x509-ref-2}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.
+
+~~~~~~~~~~~
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor7",
+     / req_cnf /     4 : {
+       e'x5t' : [-15, h'6ac62b8f41ba5d99']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-C-to-AS-x509-ref-2 title="Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within \"req_cnf\""}
+
+{{fig-example-AS-to-C-c509-ref-2}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of a "c5t" structure, identifying by reference the C509 certificate of the RS.
+
+~~~~~~~~~~~
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...cc04',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'c5t' : [-15, h'cb247f29c82b933a']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-AS-to-C-c509-ref-2 title="Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Identified by Reference within \"rs_cnf\""}
+
 ## Combination of RPK Mode and Certificate Mode # {#ssec-example-hybrid-3}
 
 {{fig-example-C-to-AS-ccs-2}} shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.
@@ -617,7 +656,7 @@ This section provides additional examples where, within the same ACE execution w
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor8",
      / req_cnf /     4 : {
        e'kccs' : {
          / sub / 2 : "55-11-44-AB-CD-EF-00-00",
@@ -688,12 +727,52 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-AS-to-C-x509-3 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
+The following shows a variation of the two previous examples, where one authentication credential is a raw public key specified by a COSE_Key Object and the other authentication credential is an X.509 certificate, with both credentials identified by reference.
+
+{{fig-example-C-to-AS-ckt-2}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of a "ckt" structure, identifying by reference the COSE_Key Object that specifies its public key.
+
+~~~~~~~~~~~
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor9",
+     / req_cnf /     4 : {
+       / ckt / 5 : h'29e8a588da26249fc88f3b3f059f2144
+                     475c895619d64b2ad4aa2f8a051e8dc9'
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-C-to-AS-ckt-2 title="Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Object Identified by Reference within \"req_cnf\""}
+
+{{fig-example-AS-to-C-x509-ref-2}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5t" structure, identifying by reference the X.509 certificate of the RS.
+
+~~~~~~~~~~~
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...f3c5',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'x5t' : [-15, h'e35464981de8d29c']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+~~~~~~~~~~~
+{: #fig-example-AS-to-C-x509-ref-2 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Identified by Reference within \"rs_cnf\""}
+
 # CDDL Model # {#sec-cddl-model}
 {:removeinrfc}
 
 ~~~~~~~~~~~~~~~~~~~~ CDDL
 ; CWT Confirmation Methods
 x5t = 6
+c5t = 8
 kccs = 11
 x5chain = 24
 c5c = 26
@@ -704,6 +783,10 @@ c5c = 26
 {:removeinrfc}
 
 ## Version -00 to -01 ## {#sec-01-02}
+
+* Minor fixes in examples.
+
+* Added more examples with Hybrid Settings.
 
 * Updated CBOR abbreviations for a more efficient use of codepoints.
 
