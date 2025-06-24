@@ -786,7 +786,7 @@ c5c = 26
 
 * Minor fixes in examples.
 
-* Added more examples with Hybrid Settings.
+* Added more examples with hybrid settings.
 
 * Updated CBOR abbreviations for a more efficient use of codepoints.
 
