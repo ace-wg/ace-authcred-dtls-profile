@@ -5,8 +5,6 @@ title: Additional Formats of Authentication Credentials for the Datagram Transpo
 abbrev: Authentication Credentials DTLS profile
 docname: draft-ietf-ace-authcred-dtls-profile-latest
 
-# stand_alone: true
-
 ipr: trust200902
 area: Security
 wg: ACE Working Group
@@ -88,35 +86,35 @@ This document updates the Datagram Transport Layer Security (DTLS) profile for A
 
 # Introduction # {#intro}
 
-The Authentication and Authorization for Constrained Environments (ACE) framework {{RFC9200}} defines an architecture to enforce access control for constrained devices. A client (C) requests an evidence of granted permissions from an authorization server (AS) in the form of an access token, then uploads the access token to the target resource server (RS), and finally accesses protected resources at RS according to what is specified in the access token.
+The Authentication and Authorization for Constrained Environments (ACE) framework {{RFC9200}} defines an architecture to enforce access control for constrained devices. A client (C) requests an evidence of granted permissions from an authorization server (AS) in the form of an access token, then uploads the access token to the target resource server (RS), and finally accesses protected resources at the RS according to what is specified in the access token.
 
 The framework has as main building blocks the OAuth 2.0 framework {{RFC6749}}, the Constrained Application Protocol (CoAP) {{RFC7252}} for message transfer, Concise Binary Object Representation (CBOR) {{RFC8949}} for compact encoding, and CBOR Object Signing and Encryption (COSE) {{RFC9052}}{{RFC9053}} for self-contained protection of access tokens.
 
-Separate profile documents define in detail how the participants in the ACE architecture communicate, especially as to the security protocols that they use. In particular, the ACE profile defined in {{RFC9202}} specifies how Datagram Transport Layer Security (DTLS) {{RFC6347}}{{RFC9147}} is used to protect communications with transport-layer security in the ACE architecture. The profile has also been extended in {{RFC9430}}, in order to allow the alternative use of Transport Layer Security (TLS) {{RFC8446}} when CoAP is transported over TCP or WebSockets {{RFC8323}}.
+Separate profile documents define in detail how the participants in the ACE architecture communicate, especially as to the security protocols that they use. In particular, the ACE profile defined in {{RFC9202}} specifies how Datagram Transport Layer Security (DTLS) {{RFC6347}}{{RFC9147}} is used to protect communications with transport-layer security in the ACE architecture. The profile has been extended in {{RFC9430}}, in order to allow the alternative use of Transport Layer Security (TLS) {{RFC8446}} when CoAP is transported over TCP or WebSockets {{RFC8323}}.
 
-The DTLS profile {{RFC9202}} allows C and RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines an RPK mode (see {{Section 3.2 of RFC9202}}), where authentication relies on the public keys of the two peers as raw public keys {{RFC7250}}.
+The DTLS profile defined in {{RFC9202}} allows C and the RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines a Raw Public Key (RPK) mode (see {{Section 3.2 of RFC9202}}), where authentication relies on the public keys of the two peers as raw public keys {{RFC7250}}.
 
-That is, C specifies its public key to the AS when requesting an access token, and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of RS. Then, C and RS use their asymmetric keys when performing the DTLS handshake, as defined in {{RFC7250}}.
+That is, C specifies its public key to the AS when requesting an access token and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of the RS. Then, C and the RS use their asymmetric keys when performing the DTLS handshake, as defined in {{RFC7250}}.
 
-Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for transporting the public keys of C and RS, as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public certificates.
+Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for specifying the public keys of C and the RS as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public key certificates.
 
-This document enables such additional formats in the DTLS profile, by defining how the public keys of C and RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, or X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
+This document enables such additional formats in the DTLS profile, by defining how the public keys of C and the RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
 
-This document also enables the DTLS profile to use the CWT Confirmation Method 'ckt' defined in {{RFC9679}} when using a COSE_Key object as raw public key, thus allowing to identifying the COSE_Key object by reference, alternatively to transporting it by value.
+This document also enables the DTLS profile to use the CWT Confirmation Method 'ckt' defined in {{RFC9679}} when using a COSE_Key object for specifying a raw public key, thus allowing to identifying the COSE_Key object by reference alternatively to transporting it by value.
 
 In particular, this document updates {{RFC9202}} as follows.
 
 * {{sec-rpk-mode}} of this document extends the RPK mode defined in {{Section 3.2 of RFC9202}}, by enabling:
 
-  - The use of CCSs to wrap the raw public keys of C and RS (see {{sec-rpk-mode-kccs}}).
+  - The use of CCSs to wrap the raw public keys of C and the RS, i.e., as a new format of authentication credentials that can be used for specifying the public keys of C and the RS as raw public keys (see {{sec-rpk-mode-kccs}}).
 
-  - The use of the CWT Confirmation Method 'ckt' to identify by reference a COSE_Key object used as authentication credential (see {{sec-rpk-mode-ckt}}).
+  - The use of the CWT Confirmation Method 'ckt' to identify a COSE_Key object by reference, when that is the format of authentication credentials used for specifying the public keys of C and the RS as raw public keys (see {{sec-rpk-mode-ckt}}).
 
-* {{sec-cert-mode}} of this document defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and RS. In either case, certificates can be transported by value or instead identified by reference.
+* {{sec-cert-mode}} of this document defines a new certificate mode, which enables the use of X.509 or C509 certificates to specify the public keys of C and the RS. In either case, certificates can be transported by value or instead identified by reference.
 
-When using the updated RPK mode, the raw public keys of C and RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS. When both raw public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
+When using the updated RPK mode, the raw public keys of C and the RS do not have to be of the same format. That is, it is possible to have both public keys as a COSE_Key object or as a CCS, or instead one as a COSE_Key object while the other one as a CCS. When both raw public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
-When using the certificate mode, the certificates of C and RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
+When using the certificate mode, the certificates of C and the RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
 Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.
 
@@ -128,13 +126,13 @@ What is defined in this document is seamlessly applicable if TLS is used instead
 
 {::boilerplate bcp14-tagged}
 
-Readers are expected to be familiar with the terms and concepts described in the ACE framework for Authentication and Authorization {{RFC9200}}{{RFC9201}} and its DTLS profile {{RFC9202}}, as well as with terms and concepts related to CBOR Web Tokens (CWTs) {{RFC8392}} and CWT Confirmation Methods {{RFC8747}}.
+Readers are expected to be familiar with the terms and concepts described in the ACE framework for Authentication and Authorization {{RFC9200}}{{RFC9201}} and in its DTLS profile {{RFC9202}}, as well as with terms and concepts related to CBOR Web Tokens (CWTs) {{RFC8392}} and CWT Confirmation Methods {{RFC8747}}.
 
 The terminology for entities in the considered architecture is defined in OAuth 2.0 {{RFC6749}}. In particular, this includes client (C), resource server (RS), and authorization server (AS).
 
-Readers are also expected to be familiar with the terms and concepts related to CoAP {{RFC7252}}, CBOR {{RFC8949}}, Concise Data Definition Language (CDDL) {{RFC8610}}, COSE {{RFC9052}}{{RFC9053}}, the DTLS protocol suite {{RFC6347}}{{RFC9147}}, and the use of raw public keys in DTLS {{RFC7250}}.
+Readers are also expected to be familiar with the terms and concepts related to CoAP {{RFC7252}}, CBOR {{RFC8949}}, Concise Data Definition Language (CDDL) {{RFC8610}}, COSE {{RFC9052}}{{RFC9053}}, DTLS {{RFC6347}}{{RFC9147}}, and the use of raw public keys in DTLS {{RFC7250}}.
 
-Note that the term "endpoint" is used here following its OAuth definition, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at RS. This document does not use the CoAP definition of "endpoint", which is "An entity participating in the CoAP protocol."
+Note that the term "endpoint" is used here following its OAuth definition {{RFC6749}}, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at the RS. The CoAP definition, which is "\[a\]n entity participating in the CoAP protocol" {{RFC7252}}, is not used in this document.
 
 This document also refers to the term "authentication credential", which denotes the information associated with an entity, including that entity's public key and parameters associated with the public key. Examples of authentication credentials are CWT Claims Sets (CCSs) {{RFC8392}}, X.509 certificates {{RFC5280}}, and C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
 
@@ -150,7 +148,7 @@ This section updates the RPK mode defined in {{Section 3.2 of RFC9202}}, as deta
 
 ## Raw Public Keys as CCSs # {#sec-rpk-mode-kccs}
 
-This section defines how the raw public key of C and RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE_Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
+This section defines how the raw public key of C and the RS can be provided as wrapped by a CCS {{RFC8392}}, instead of as a COSE_Key object {{RFC9052}}. Note that only the differences from {{RFC9202}} are compiled below.
 
 If the raw public key of C is wrapped by a CCS, then the following applies.
 
@@ -162,11 +160,11 @@ If the raw public key of C is wrapped by a CCS, then the following applies.
 
   In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
 
-If the raw public key of RS is wrapped by a CCS, then the following applies.
+If the raw public key of the RS is wrapped by a CCS, then the following applies.
 
-* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of RS.
+* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of the RS.
 
-  In particular, the CCS MUST include the "cnf" claim specifying the public key of RS as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of RS associated with the public key of RS, and MAY include additional claims.
+  In particular, the CCS MUST include the "cnf" claim specifying the public key of the RS as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of the RS associated with the public key of the RS, and MAY include additional claims.
 
 For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter of the Access Token Response, and the "cnf" claim of the access token, the Confirmation Method "kccs" structure and its identifier are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
@@ -231,29 +229,29 @@ It is not required that both public keys are wrapped by a CCS. That is, one of t
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-ccs title="Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS, Conveyed within \"rs_cnf\""}
+{: #fig-example-AS-to-C-ccs title="Access Token Response Example for RPK Mode, with the Public Key of the RS Wrapped by a CCS, Conveyed within \"rs_cnf\""}
 
 ## Raw Public Keys as COSE\_Keys Identified by Reference # {#sec-rpk-mode-ckt}
 
-As per {{Section 3.2 of RFC9202}}, COSE_Key objects {{RFC9052}} used as raw public keys are transported by value in the Access Token Request and Response messages, as well as within access tokens.
+As per {{Section 3.2 of RFC9202}}, COSE_Key objects {{RFC9052}} used for specifying raw public keys are transported by value in the Access Token Request and Response messages, as well as within access tokens.
 
 This section extends the DTLS profile by allowing to identifying those COSE_Key objects by reference, alternatively to transporting those by value. Note that only the differences from {{RFC9202}} are compiled below.
 
 The following relies on the CWT Confirmation Method 'ckt' defined in {{RFC9679}}. When using a 'ckt' structure, this conveys the thumbprint of a COSE_Key object computed as per {{Section 3 of RFC9679}}. In particular, the used hash function MUST be SHA-256 {{SHA-256}}, which is mandatory to support when supporting COSE Key thumbprints.
 
-If the raw public key of C is a COSE_Key object COSE_KEY_C and the intent is to identify it by reference, then the following applies.
+If the raw public key of C is specified as a COSE_Key object COSE_KEY_C and the intent is to identify it by reference, then the following applies.
 
 * The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
 * The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
-If the raw public key of RS is a COSE_Key object COSE_KEY_RS and the intent is to identify it by reference, then the following applies.
+If the raw public key of the RS is specified as a COSE_Key object COSE_KEY_RS and the intent is to identify it by reference, then the following applies.
 
 * The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.
 
-When both public keys are COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
+When both public keys are specified as COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
-Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure MUST NOT be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in {{sec-rpk-mode-kccs}}.
+Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure MUST NOT be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in {{sec-rpk-mode-kccs}} of this document.
 
 ### Examples
 
@@ -272,7 +270,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-C-to-AS-ckt title="Access Token Request Example for RPK Mode, with the Public Key of C as a COSE_Key Identified by Reference within \"req_cnf\""}
+{: #fig-example-C-to-AS-ckt title="Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Identified by Reference within \"req_cnf\""}
 
 {{fig-example-AS-to-C-ckt}} shows an example of Access Token Response from the AS to C.
 
@@ -292,19 +290,19 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-ckt title="Access Token Response Example for RPK Mode, with the Public Key of RS as a COSE_Key Identified by Reference within \"rs_cnf\""}
+{: #fig-example-AS-to-C-ckt title="Access Token Response Example for RPK Mode, with the Public Key of the RS Specified as a COSE_Key Identified by Reference within \"rs_cnf\""}
 
 # Certificate Mode # {#sec-cert-mode}
 
-This section defines a new certificate mode of the DTLS profile, which enables the use of public certificates to specify the public keys of C and RS. Compared to the RPK mode defined in {{Section 3.2 of RFC9202}} and extended in {{sec-rpk-mode}} of this document, the certificate mode displays the differences compiled below.
+This section defines a new certificate mode of the DTLS profile, which enables the use of public key certificates to specify the public keys of C and the RS. Compared to the RPK mode defined in {{Section 3.2 of RFC9202}} and extended in {{sec-rpk-mode}} of this document, the certificate mode displays the differences compiled below.
 
-The authentication credential of C and/or RS is a public certificate, i.e., an X.509 certificate {{RFC5280}} or a C509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
+The authentication credential of C and/or the RS is a public key certificate, i.e., an X.509 certificate {{RFC5280}} or a C509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 * The CWT Confirmation Methods "x5chain", "x5bag", "c5c", and "c5b" defined in {{I-D.ietf-ace-edhoc-oscore-profile}} are used to transport such authentication credentials by value.
 
 * The CWT Confirmation Methods "x5t", "x5u", "c5t", and "c5u" defined in {{I-D.ietf-ace-edhoc-oscore-profile}} are used to identify such authentication credentials by reference.
 
-If the authentication credential AUTH_CRED_C of C is a public certificate, then the following applies.
+If the authentication credential AUTH_CRED_C of C is a public key certificate, then the following applies.
 
 - The "req_cnf" parameter {{RFC9201}} of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) specifies AUTH_CRED_C as follows.
 
@@ -334,7 +332,7 @@ If the authentication credential AUTH_CRED_C of C is a public certificate, then 
 
   - A "c5t" or "c5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI {{RFC3986}}, respectively.
 
-If the authentication credential AUTH_CRED_RS of RS is a public certificate, then the following applies.
+If the authentication credential AUTH_CRED_RS of the RS is a public key certificate, then the following applies.
 
 - The "rs_cnf" parameter {{RFC9201}} of the Access Token Response specifies AUTH_CRED_RS as follows.
 
@@ -354,11 +352,11 @@ For the "req_cnf" parameter of the Access Token Request, the "rs_cnf" parameter 
 
 When using either of the structures, the specified authentication credential is just the end-entity certificate.
 
-As per {{RFC6347}} and {{RFC9147}}, a public certificate is specified in the Certificate message of the DTLS handshake. For X.509 certificates, the TLS Certificate Type is "X509", as defined in {{RFC6091}}. For C509 certificates, the TLS certificate type is "C509 Certificate", as defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+As per {{RFC6347}} and {{RFC9147}}, a public key certificate is specified in the Certificate message of the DTLS handshake. For X.509 certificates, the TLS Certificate Type is "X509", as defined in {{RFC6091}}. For C509 certificates, the TLS certificate type is "C509 Certificate", as defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 It is not required that AUTH_CRED_C and AUTH_CRED_RS are both X.509 certificates or both C509 certificates. Also, it is not required that AUTH_CRED_C and AUTH_CRED_RS are both transported by value or both identified by reference.
 
-Finally, one of the two authentication credentials can be a public certificate, while the other one can be a raw public key. This is consistent with the admitted, combined use of raw public keys and certificates, as discussed in {{Section 5.3 of RFC7250}}.
+Finally, one of the two authentication credentials can be a public key certificate, while the other one can be a raw public key. This is consistent with the admitted, combined use of raw public keys and certificates, as discussed in {{Section 5.3 of RFC7250}}.
 
 ## Examples
 
@@ -391,7 +389,7 @@ Finally, one of the two authentication credentials can be a public certificate, 
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-x509 title="Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within \"req_cnf\""}
 
-{{fig-example-AS-to-C-x509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.
+{{fig-example-AS-to-C-x509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of the RS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -421,7 +419,7 @@ Finally, one of the two authentication credentials can be a public certificate, 
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-x509 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within \"rs_cnf\""}
+{: #fig-example-AS-to-C-x509 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
 The following shows a variation of the two previous examples, where the same X.509 certificates are instead identified by reference.
 
@@ -442,7 +440,7 @@ The following shows a variation of the two previous examples, where the same X.5
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-x509-ref title="Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within \"req_cnf\""}
 
-{{fig-example-AS-to-C-x509-ref}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5t" structure, identifying by reference the X.509 certificate of RS.
+{{fig-example-AS-to-C-x509-ref}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5t" structure, identifying by reference the X.509 certificate of the RS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -460,15 +458,15 @@ The following shows a variation of the two previous examples, where the same X.5
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-x509-ref title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within \"rs_cnf\""}
+{: #fig-example-AS-to-C-x509-ref title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
 # Security Considerations # {#sec-security-considerations}
 
 The security considerations from {{RFC9200}} and {{RFC9202}} apply to this document as well.
 
-When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object as a raw public key, the security considerations from {{RFC9679}} apply.
+When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object that is used for specifying a raw public key, the security considerations from {{RFC9679}} apply.
 
-When using public certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
+When using public key certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
 
 When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9598}}, {{RFC9549}}, {{RFC9608}}, and {{RFC9618}} apply.
 
@@ -482,7 +480,7 @@ This document has no actions for IANA.
 
 # Examples with Hybrid Settings # {#ssec-example-hybrid}
 
-This section provides additional examples where, within the same ACE execution workflow, C and RS use different formats of raw public keys (see {{ssec-example-hybrid-1}}), or different formats of certificates (see {{ssec-example-hybrid-2}}), or a combination of the RPK mode and certificate mode (see {{ssec-example-hybrid-3}}).
+This section provides additional examples where, within the same ACE execution workflow, C and the RS use different formats of raw public keys (see {{ssec-example-hybrid-1}}), or different formats of certificates (see {{ssec-example-hybrid-2}}), or a combination of the RPK mode and certificate mode (see {{ssec-example-hybrid-3}}).
 
 ## RPK Mode (Raw Public Keys of Different Formats) # {#ssec-example-hybrid-1}
 
@@ -509,7 +507,7 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-cose-key title="Access Token Request Example for RPK Mode, with the Public Key of C Conveyed as a COSE Key within \"req_cnf\""}
 
-{{fig-example-AS-to-C-ccs-2}} shows an example of Access Token Response from the AS to C, where the public key of RS is wrapped by a CCS.
+{{fig-example-AS-to-C-ccs-2}} shows an example of Access Token Response from the AS to C, where the public key of the RS is wrapped by a CCS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -538,7 +536,7 @@ This section provides additional examples where, within the same ACE execution w
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-ccs-2 title="Access Token Response Example for RPK Mode, with the Public Key of RS Wrapped by a CCS within \"rs_cnf\""}
+{: #fig-example-AS-to-C-ccs-2 title="Access Token Response Example for RPK Mode, with the Public Key of the RS Wrapped by a CCS within \"rs_cnf\""}
 
 ## Certificate Mode (Certificates of Different Formats) # {#ssec-example-hybrid-2}
 
@@ -575,7 +573,7 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-x509-2 title="Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within \"req_cnf\""}
 
-{{fig-example-AS-to-C-x509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of a "c5c" structure, transporting by value only the C509 certificate of RS.
+{{fig-example-AS-to-C-x509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of a "c5c" structure, transporting by value only the C509 certificate of the RS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -607,7 +605,7 @@ This section provides additional examples where, within the same ACE execution w
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-c509 title="Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of RS, Transported by Value within \"rs_cnf\""}
+{: #fig-example-AS-to-C-c509 title="Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
 ## Combination of RPK Mode and Certificate Mode # {#ssec-example-hybrid-3}
 
@@ -639,7 +637,7 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-ccs-2 title="Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within \"req_cnf\""}
 
-{{fig-example-AS-to-C-x509-3}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of RS.
+{{fig-example-AS-to-C-x509-3}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of the RS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -688,7 +686,7 @@ This section provides additional examples where, within the same ACE execution w
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-x509-3 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of RS, Transported by Value within \"rs_cnf\""}
+{: #fig-example-AS-to-C-x509-3 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
 # CDDL Model # {#sec-cddl-model}
 {:removeinrfc}
@@ -700,10 +698,14 @@ x5t = 8
 c5c = 10
 kccs = 15
 ~~~~~~~~~~~~~~~~~~~~
-{: #fig-cddl-model title="CDDL model" artwork-align="left"}
+{: #fig-cddl-model title="CDDL Model" artwork-align="left"}
 
 # Document Updates # {#sec-document-updates}
 {:removeinrfc}
+
+## Version -00 to -01 ## {#sec-01-02}
+
+* Editorial improvements.
 
 ## Version -00 to -01 ## {#sec-00-01}
 
