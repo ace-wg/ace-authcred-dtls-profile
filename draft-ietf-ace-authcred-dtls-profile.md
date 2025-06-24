@@ -249,7 +249,7 @@ If the raw public key of the RS is specified as a COSE_Key object COSE_KEY_RS an
 
 * The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.
 
-When both public keys are specified as COSE_Keys, it is possible to have both COSE_Keys transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
+When both public keys are specified as COSE_Key objects, it is possible to have both transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
 Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to authentication credentials that are COSE_Key objects. That is, the 'ckt' structure MUST NOT be used to identify authentication credentials of other formats and that include a COSE_Key object as part of their content, such as CCSs as defined in {{sec-rpk-mode-kccs}} of this document.
 
@@ -270,7 +270,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-C-to-AS-ckt title="Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Identified by Reference within \"req_cnf\""}
+{: #fig-example-C-to-AS-ckt title="Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Object Identified by Reference within \"req_cnf\""}
 
 {{fig-example-AS-to-C-ckt}} shows an example of Access Token Response from the AS to C.
 
@@ -290,7 +290,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
      }
    }
 ~~~~~~~~~~~
-{: #fig-example-AS-to-C-ckt title="Access Token Response Example for RPK Mode, with the Public Key of the RS Specified as a COSE_Key Identified by Reference within \"rs_cnf\""}
+{: #fig-example-AS-to-C-ckt title="Access Token Response Example for RPK Mode, with the Public Key of the RS Specified as a COSE_Key Object Identified by Reference within \"rs_cnf\""}
 
 # Certificate Mode # {#sec-cert-mode}
 
