@@ -1290,8 +1290,8 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-1.1-5">Note that the term "endpoint" is used here following its OAuth definition <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, aimed at denoting resources such as /token and /introspect at the AS, and /authz-info at the RS. The CoAP definition, which is "[a]n entity participating in the CoAP protocol" <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>, is not used in this document.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">This document also refers to the term "authentication credential", which denotes the information associated with an entity, including that entity's public key and parameters associated with the public key. Examples of authentication credentials are CWT Claims Sets (CCSs) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, X.509 certificates <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, and C509 certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <p id="section-1.1-7">Examples throughout this document are expressed in CBOR diagnostic notation as defined in <span><a href="https://rfc-editor.org/rfc/rfc8949#section-8" class="relref">Section 8</a> of [<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-G" class="relref">Appendix G</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>. Diagnostic notation comments are often used to provide a textual representation of the parameters' keys and values.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
-<p id="section-1.1-8">In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 15</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
-<p id="section-1.1-9">Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 15</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. Finally, please delete this note.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
+<p id="section-1.1-8">In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 19</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
+<p id="section-1.1-9">Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in <a href="#fig-cddl-model" class="auto internal xref">Figure 19</a> of <a href="#sec-cddl-model" class="auto internal xref">Appendix B</a>. Finally, please delete this note.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1346,7 +1346,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor1",
      / req_cnf /     4 : {
        e'kccs' : {
          / sub / 2 : "42-50-31-FF-EF-37-32-39",
@@ -1449,7 +1449,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor2",
      / req_cnf /     4 : {
        / ckt / 5 : h'd3550f1b5b763ee09d058fc7aef69900
                      1279903a4a15bdc3953d32b10f7cb8b1'
@@ -1471,7 +1471,7 @@ In particular, the CCS <span class="bcp14">MUST</span> include the "cnf" claim s
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...643b',
+     / access_token / 1 : h'd83dd083...5532',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's RPK in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -1592,7 +1592,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-examples-3">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-examples-3" class="section-name selfRef">Examples</a>
         </h3>
-<p id="section-3.1-1"><a href="#fig-example-C-to-AS-x509" class="auto internal xref">Figure 5</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1"><a href="#fig-example-C-to-AS-x509" class="auto internal xref">Figure 5</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its X.509 certificate.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <span id="name-access-token-request-example-"></span><div id="fig-example-C-to-AS-x509">
 <figure id="figure-5">
           <div class="alignLeft art-text artwork" id="section-3.1-2.1">
@@ -1602,7 +1602,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor3",
      / req_cnf /     4 : {
        e'x5chain' : h'3081ee3081a1a003020102020462319ec430
                       0506032b6570301d311b301906035504030c
@@ -1663,8 +1663,8 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 <a href="#name-access-token-response-example" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-5">The following shows a variation of the two previous examples, where the same X.509 certificates are instead identified by reference.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6"><a href="#fig-example-C-to-AS-x509-ref" class="auto internal xref">Figure 7</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its own X.509 certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">The following shows a variation of the two previous examples, where the X.509 certificates used as authentication credentials are instead identified by reference.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6"><a href="#fig-example-C-to-AS-x509-ref" class="auto internal xref">Figure 7</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <span id="name-access-token-request-example-f"></span><div id="fig-example-C-to-AS-x509-ref">
 <figure id="figure-7">
           <div class="alignLeft art-text artwork" id="section-3.1-7.1">
@@ -1674,7 +1674,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor4",
      / req_cnf /     4 : {
        e'x5t' : [-15, h'79f2a41b510c1f9b']
        / SHA-2 256-bit Hash truncated to 64-bits /
@@ -1696,7 +1696,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...2fa6',
+     / access_token / 1 : h'd83dd083...cda0',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's X.509 certificate in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -1708,7 +1708,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
-<a href="#name-access-token-response-example-" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within "rs_cnf"</a>
+<a href="#name-access-token-response-example-" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Identified by Reference within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1905,7 +1905,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor5",
      / req_cnf /     4 : {
        / COSE_Key / 1 : {
          / kty /    1 : 2 / EC2 /,
@@ -1966,7 +1966,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-certificate-mode-certificat">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-certificate-mode-certificat" class="section-name selfRef">Certificate Mode (Certificates of Different Formats)</a>
         </h3>
-<p id="appendix-A.2-1"><a href="#fig-example-C-to-AS-x509-2" class="auto internal xref">Figure 11</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its own X.509 certificate.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1"><a href="#fig-example-C-to-AS-x509-2" class="auto internal xref">Figure 11</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5chain" structure, transporting by value only its X.509 certificate.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 <span id="name-access-token-request-example-for"></span><div id="fig-example-C-to-AS-x509-2">
 <figure id="figure-11">
           <div class="alignLeft art-text artwork" id="appendix-A.2-2.1">
@@ -1976,7 +1976,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor6",
      / req_cnf /     4 : {
        e'x5chain' : h'308201383081dea003020102020301f50d30
                       0a06082a8648ce3d04030230163114301206
@@ -2014,7 +2014,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Max-Age: 3560
    Payload:
    {
-     / access_token / 1 : h'd83dd083...2fa6',
+     / access_token / 1 : h'd83dd083...001a',
        / (remainder of CWT omitted for brevity;
        CWT contains the client's C509 certificate in the cnf claim) /
      / expires_in /   2 : 3600,
@@ -2043,6 +2043,54 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
 <a href="#name-access-token-response-example-fo" class="selfRef">Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Transported by Value within "rs_cnf"</a>
           </figcaption></figure>
 </div>
+<p id="appendix-A.2-5">The following shows a variation of the two previous examples, where the certificates used as authentication credentials are instead identified by reference.<a href="#appendix-A.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-6"><a href="#fig-example-C-to-AS-x509-ref-2" class="auto internal xref">Figure 13</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.<a href="#appendix-A.2-6" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for-"></span><div id="fig-example-C-to-AS-x509-ref-2">
+<figure id="figure-13">
+          <div class="alignLeft art-text artwork" id="appendix-A.2-7.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor7",
+     / req_cnf /     4 : {
+       e'x5t' : [-15, h'6ac62b8f41ba5d99']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-access-token-request-example-for-" class="selfRef">Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Identified by Reference within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.2-8"><a href="#fig-example-AS-to-C-c509-ref-2" class="auto internal xref">Figure 14</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of a "c5t" structure, identifying by reference the C509 certificate of the RS.<a href="#appendix-A.2-8" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-for"></span><div id="fig-example-AS-to-C-c509-ref-2">
+<figure id="figure-14">
+          <div class="alignLeft art-text artwork" id="appendix-A.2-9.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...cc04',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'c5t' : [-15, h'cb247f29c82b933a']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-access-token-response-example-for" class="selfRef">Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Identified by Reference within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
 </section>
 </div>
 <div id="ssec-example-hybrid-3">
@@ -2050,9 +2098,9 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
         <h3 id="name-combination-of-rpk-mode-and">
 <a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-combination-of-rpk-mode-and" class="section-name selfRef">Combination of RPK Mode and Certificate Mode</a>
         </h3>
-<p id="appendix-A.3-1"><a href="#fig-example-C-to-AS-ccs-2" class="auto internal xref">Figure 13</a> shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
-<span id="name-access-token-request-example-for-"></span><div id="fig-example-C-to-AS-ccs-2">
-<figure id="figure-13">
+<p id="appendix-A.3-1"><a href="#fig-example-C-to-AS-ccs-2" class="auto internal xref">Figure 15</a> shows an example of Access Token Request from C to the AS, where the public key of C is wrapped by a CCS.<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for-r"></span><div id="fig-example-C-to-AS-ccs-2">
+<figure id="figure-15">
           <div class="alignLeft art-text artwork" id="appendix-A.3-2.1">
 <pre>
    POST coaps://as.example.com/token
@@ -2060,7 +2108,7 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    Payload:
    {
      / grant_type / 33 : 2 / client_credentials /,
-     / audience /    5 : "tempSensor4711",
+     / audience /    5 : "tempSensor8",
      / req_cnf /     4 : {
        e'kccs' : {
          / sub / 2 : "55-11-44-AB-CD-EF-00-00",
@@ -2079,13 +2127,13 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
-<a href="#name-access-token-request-example-for-" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<a href="#name-access-token-request-example-for-r" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Wrapped by a CCS within "req_cnf"</a>
           </figcaption></figure>
 </div>
-<p id="appendix-A.3-3"><a href="#fig-example-AS-to-C-x509-3" class="auto internal xref">Figure 14</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of the RS.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
-<span id="name-access-token-response-example-for"></span><div id="fig-example-AS-to-C-x509-3">
-<figure id="figure-14">
+<p id="appendix-A.3-3"><a href="#fig-example-AS-to-C-x509-3" class="auto internal xref">Figure 16</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5chain" structure, transporting by value only the X.509 certificate of the RS.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-for-"></span><div id="fig-example-AS-to-C-x509-3">
+<figure id="figure-16">
           <div class="alignLeft art-text artwork" id="appendix-A.3-4.1">
 <pre>
    2.01 Created
@@ -2135,8 +2183,56 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
    }
 </pre>
 </div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
-<a href="#name-access-token-response-example-for" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within "rs_cnf"</a>
+<figcaption><a href="#figure-16" class="selfRef">Figure 16</a>:
+<a href="#name-access-token-response-example-for-" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within "rs_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.3-5">The following shows a variation of the two previous examples, where one authentication credential is a raw public key specified by a COSE_Key Object and the other authentication credential is an X.509 certificate, with both credentials identified by reference.<a href="#appendix-A.3-5" class="pilcrow">¶</a></p>
+<p id="appendix-A.3-6"><a href="#fig-example-C-to-AS-ckt-2" class="auto internal xref">Figure 17</a> shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of a "ckt" structure, identifying by reference the COSE_Key Object that specifies its public key.<a href="#appendix-A.3-6" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-example-for-rp"></span><div id="fig-example-C-to-AS-ckt-2">
+<figure id="figure-17">
+          <div class="alignLeft art-text artwork" id="appendix-A.3-7.1">
+<pre>
+   POST coaps://as.example.com/token
+   Content-Format: 19 (application/ace+cbor)
+   Payload:
+   {
+     / grant_type / 33 : 2 / client_credentials /,
+     / audience /    5 : "tempSensor9",
+     / req_cnf /     4 : {
+       / ckt / 5 : h'29e8a588da26249fc88f3b3f059f2144
+                     475c895619d64b2ad4aa2f8a051e8dc9'
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-17" class="selfRef">Figure 17</a>:
+<a href="#name-access-token-request-example-for-rp" class="selfRef">Access Token Request Example for RPK Mode, with the Public Key of C Specified as a COSE_Key Object Identified by Reference within "req_cnf"</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-A.3-8"><a href="#fig-example-AS-to-C-x509-ref-2" class="auto internal xref">Figure 18</a> shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of an "x5t" structure, identifying by reference the X.509 certificate of the RS.<a href="#appendix-A.3-8" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-example-for-c"></span><div id="fig-example-AS-to-C-x509-ref-2">
+<figure id="figure-18">
+          <div class="alignLeft art-text artwork" id="appendix-A.3-9.1">
+<pre>
+   2.01 Created
+   Content-Format: 19 (application/ace+cbor)
+   Max-Age: 3560
+   Payload:
+   {
+     / access_token / 1 : h'd83dd083...f3c5',
+       / (remainder of CWT omitted for brevity;
+       CWT contains the client's X.509 certificate in the cnf claim) /
+     / expires_in /   2 : 3600,
+     / rs_cnf /      41 : {
+       e'x5t' : [-15, h'e35464981de8d29c']
+       / SHA-2 256-bit Hash truncated to 64-bits /
+     }
+   }
+</pre>
+</div>
+<figcaption><a href="#figure-18" class="selfRef">Figure 18</a>:
+<a href="#name-access-token-response-example-for-c" class="selfRef">Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Identified by Reference within "rs_cnf"</a>
           </figcaption></figure>
 </div>
 </section>
@@ -2150,17 +2246,18 @@ If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter <span class="bcp14
       </h2>
 <p id="appendix-B-1">This section is to be removed before publishing as an RFC.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <span id="name-cddl-model-2"></span><div id="fig-cddl-model">
-<figure id="figure-15">
+<figure id="figure-19">
         <div class="alignLeft art-CDDL art-text artwork" id="appendix-B-2.1">
 <pre>
 ; CWT Confirmation Methods
 x5t = 6
+c5t = 8
 kccs = 11
 x5chain = 24
 c5c = 26
 </pre>
 </div>
-<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<figcaption><a href="#figure-19" class="selfRef">Figure 19</a>:
 <a href="#name-cddl-model-2" class="selfRef">CDDL Model</a>
         </figcaption></figure>
 </div>
@@ -2179,10 +2276,16 @@ c5c = 26
         </h3>
 <ul class="normal">
 <li class="normal" id="appendix-C.1-1.1">
-            <p id="appendix-C.1-1.1.1">Updated CBOR abbreviations for a more efficient use of codepoints.<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.1.1">Minor fixes in examples.<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.2">
-            <p id="appendix-C.1-1.2.1">Editorial improvements.<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.2.1">Added more examples with Hybrid Settings.<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-C.1-1.3">
+            <p id="appendix-C.1-1.3.1">Updated CBOR abbreviations for a more efficient use of codepoints.<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-C.1-1.4">
+            <p id="appendix-C.1-1.4.1">Editorial improvements.<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
