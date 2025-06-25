@@ -799,7 +799,7 @@ c5c = 26
 # Document Updates # {#sec-document-updates}
 {:removeinrfc}
 
-## Version -00 to -01 ## {#sec-01-02}
+## Version -01 to -02 ## {#sec-01-02}
 
 * Considerations on providing credentials by value or by reference.
 
