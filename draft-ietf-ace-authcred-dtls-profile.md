@@ -73,6 +73,8 @@ normative:
 
 informative:
   RFC6091:
+  RFC6960:
+  RFC9360:
   I-D.ietf-ace-workflow-and-params:
 
 entity:
@@ -467,15 +469,25 @@ The following shows a variation of the two previous examples, where X.509 certif
 
 # Security Considerations # {#sec-security-considerations}
 
-The security considerations from {{RFC9200}} and {{RFC9202}} apply to this document as well.
+The security considerations from {{RFC9200}} and {{RFC9202}} apply to this document as well. Furthermore:
 
-When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object that is used for specifying a raw public key, the security considerations from {{RFC9679}} apply.
+* When using the CWT Confirmation Method 'ckt' for identifying by reference a COSE_Key object that is used for specifying a raw public key, the security considerations from {{RFC9679}} apply.
 
-When using public key certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
+* When using public key certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
 
-When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9598}}, {{RFC9549}}, {{RFC9608}}, and {{RFC9618}} apply.
+* When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9598}}, {{RFC9549}}, {{RFC9608}}, and {{RFC9618}} apply.
 
-When using C509 certificates as authentication credentials, the security considerations from {{I-D.ietf-cose-cbor-encoded-cert}} apply.
+* When using C509 certificates as authentication credentials, the security considerations from {{I-D.ietf-cose-cbor-encoded-cert}} apply.
+
+Consistently with the ACE architecture, C and the RS securely obtain each others' authentication credential from the AS acting as trusted third party, i.e., through the Access Token Response sent to C and the issued access token uploaded to the RS, respectively.
+
+Nevertheless, C and the RS are responsible for verifying the integrity and validity of obtained authentication credentials when those are CCSs or public key certificates as defined in this document.
+
+For public key certificates, verifying their validity may require using a Real-Time Clock (RTC). Trusted certification authorities (CAs) should be selected very carefully and certificate revocation should be supported. The revocation mechanism specifically used depends on the application. For example Certificate Revocation Lists {{RFC5280}} or the Online Certificate Status Protocol (OCSP) {{RFC6960}} may be used when authentication credentials are X.509 certificates.
+
+Similarly for CCSs, verifying their validity and handling their revocation require C and the RS to very carefully select relevant trust anchors and to have a well-defined trust-establishment process.
+
+Note that self-signed certificates or CCSs provided to C and the RS cannot result in modifying the set of trust anchors. A common way for a new trust anchor to be added to (or removed from) a device is by performing a firmware upgrade. A longer discussion on trust and validation in constrained devices is provided by {{RFC9360}}.
 
 # IANA Considerations
 
@@ -794,6 +806,8 @@ c5c = 26
 * Minor fixes in examples.
 
 * Added more examples with hybrid settings.
+
+* Extended security considerations.
 
 * Updated CBOR abbreviations for a more efficient use of codepoints.
 
