@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 26 December 2025                                   24 June 2025
+Expires: 27 December 2025                                   25 June 2025
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2025.
+   This Internet-Draft will expire on 27 December 2025.
 
 Copyright Notice
 
@@ -671,7 +671,7 @@ Table of Contents
                    Transported by Value within "rs_cnf"
 
    The following shows a variation of the two previous examples, where
-   the X.509 certificates used as authentication credentials are instead
+   X.509 certificates used as authentication credentials are instead
    identified by reference.
 
    Figure 7 shows an example of Access Token Request from C to the AS.
@@ -1015,7 +1015,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
           an X.509 Certificate as Authentication Credential of C,
                    Transported by Value within "req_cnf"
 
-   Figure 6 shows an example of Access Token Response from the AS to C.
+   Figure 12 shows an example of Access Token Response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of a "c5c" structure, transporting by value only the C509
    certificate of the RS.
@@ -1054,7 +1054,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
                     Transported by Value within "rs_cnf"
 
    The following shows a variation of the two previous examples, where
-   the certificates used as authentication credentials are instead
+   certificates used as authentication credentials are instead
    identified by reference.
 
    Figure 13 shows an example of Access Token Request from C to the AS.
