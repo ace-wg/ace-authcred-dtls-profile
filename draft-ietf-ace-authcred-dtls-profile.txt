@@ -90,7 +90,7 @@ Table of Contents
      A.3.  Combination of RPK Mode and Certificate Mode
    Appendix B.  CDDL Model
    Appendix C.  Document Updates
-     C.1.  Version -00 to -01
+     C.1.  Version -01 to -02
      C.2.  Version -00 to -01
    Acknowledgments
    Authors' Addresses
@@ -1318,7 +1318,7 @@ Appendix C.  Document Updates
 
    This section is to be removed before publishing as an RFC.
 
-C.1.  Version -00 to -01
+C.1.  Version -01 to -02
 
    *  Considerations on providing credentials by value or by reference.
 
