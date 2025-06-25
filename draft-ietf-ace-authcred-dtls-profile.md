@@ -73,6 +73,7 @@ normative:
 
 informative:
   RFC6091:
+  I-D.ietf-ace-workflow-and-params:
 
 entity:
   SELF: "[RFC-XXXX]"
@@ -117,6 +118,10 @@ When using the updated RPK mode, the raw public keys of C and the RS do not have
 When using the certificate mode, the certificates of C and the RS do not have to be of the same format. That is, it is possible to have both as X.509 certificates, or both as C509 certificates, or one as an X.509 certificate while the other one as a C509 certificate. Furthermore, it is possible to have both certificates transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
 Also, the RPK mode and the certificate mode can be combined. That is, it is possible that one of the two authentication credentials is a certificate, while the other one is a raw public key.
+
+The effective provisioning of an authentication credential identified by reference builds on the assumption that the recipient is storing the authentication credential by value, or is able to retrieve it from a trusted source by means of the reference obtained. If that assumption does not hold, the authentication credential will have to be provided by value.
+
+The decision about whether providing authentication credentials by value or by reference in specific situations is left to application policies at C and the AS. Furthermore, C and AS could explicitly coordinate with each other about exchanging the authentication credentials of C and the RS as transported by value or instead identified by reference, e.g., by relying on the coordination method defined in {{I-D.ietf-ace-workflow-and-params}}.
 
 When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
@@ -783,6 +788,8 @@ c5c = 26
 {:removeinrfc}
 
 ## Version -00 to -01 ## {#sec-01-02}
+
+* Considerations on providing credentials by value or by reference.
 
 * Minor fixes in examples.
 
