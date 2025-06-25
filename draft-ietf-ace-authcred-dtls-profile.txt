@@ -195,6 +195,21 @@ Table of Contents
    is, it is possible that one of the two authentication credentials is
    a certificate, while the other one is a raw public key.
 
+   The effective provisioning of an authentication credential identified
+   by reference builds on the assumption that the recipient is storing
+   the authentication credential by value, or is able to retrieve it
+   from a trusted source by means of the reference obtained.  If that
+   assumption does not hold, the authentication credential will have to
+   be provided by value.
+
+   The decision about whether providing authentication credentials by
+   value or by reference in specific situations is left to application
+   policies at C and the AS.  Furthermore, C and AS could explicitly
+   coordinate with each other about exchanging the authentication
+   credentials of C and the RS as transported by value or instead
+   identified by reference, e.g., by relying on the coordination method
+   defined in [I-D.ietf-ace-workflow-and-params].
+
    When using the formats introduced in this document, authentication
    credentials are specified by means of the CWT Confirmation Methods
    "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and
@@ -905,6 +920,15 @@ Table of Contents
 
 6.2.  Informative References
 
+   [I-D.ietf-ace-workflow-and-params]
+              Tiloca, M. and G. Selander, "Short Distribution Chain
+              (SDC) Workflow and New OAuth Parameters for the
+              Authentication and Authorization for Constrained
+              Environments (ACE) Framework", Work in Progress, Internet-
+              Draft, draft-ietf-ace-workflow-and-params-04, 3 March
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              ace-workflow-and-params-04>.
+
    [RFC6091]  Mavrogiannopoulos, N. and D. Gillmor, "Using OpenPGP Keys
               for Transport Layer Security (TLS) Authentication",
               RFC 6091, DOI 10.17487/RFC6091, February 2011,
@@ -1255,6 +1279,8 @@ Appendix C.  Document Updates
    This section is to be removed before publishing as an RFC.
 
 C.1.  Version -00 to -01
+
+   *  Considerations on providing credentials by value or by reference.
 
    *  Minor fixes in examples.
 
