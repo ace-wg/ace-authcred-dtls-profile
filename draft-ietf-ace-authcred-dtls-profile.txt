@@ -203,12 +203,12 @@ Table of Contents
    be provided by value.
 
    The decision about whether providing authentication credentials by
-   value or by reference in specific situations is left to application
-   policies at C and the AS.  Furthermore, C and AS could explicitly
-   coordinate with each other about exchanging the authentication
-   credentials of C and the RS as transported by value or instead
-   identified by reference, e.g., by relying on the coordination method
-   defined in [I-D.ietf-ace-workflow-and-params].
+   value or by reference depending on the specific situation is left to
+   application policies at C and the AS.  Furthermore, C and AS could
+   explicitly coordinate with each other about exchanging the
+   authentication credentials of C and the RS as transported by value or
+   instead identified by reference, e.g., by relying on the coordination
+   method defined in [I-D.ietf-ace-workflow-and-params].
 
    When using the formats introduced in this document, authentication
    credentials are specified by means of the CWT Confirmation Methods
