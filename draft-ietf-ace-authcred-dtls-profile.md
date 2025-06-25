@@ -421,7 +421,7 @@ Finally, one of the two authentication credentials can be a public key certifica
 ~~~~~~~~~~~
 {: #fig-example-AS-to-C-x509 title="Access Token Response Example for Certificate Mode with an X.509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
-The following shows a variation of the two previous examples, where the X.509 certificates used as authentication credentials are instead identified by reference.
+The following shows a variation of the two previous examples, where X.509 certificates used as authentication credentials are instead identified by reference.
 
 {{fig-example-C-to-AS-x509-ref}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.
 
@@ -573,7 +573,7 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-C-to-AS-x509-2 title="Access Token Request Example for Certificate Mode with an X.509 Certificate as Authentication Credential of C, Transported by Value within \"req_cnf\""}
 
-{{fig-example-AS-to-C-x509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of a "c5c" structure, transporting by value only the C509 certificate of the RS.
+{{fig-example-AS-to-C-c509}} shows an example of Access Token Response from the AS to C. In the example, the AS specifies the authentication credential of the RS by means of a "c5c" structure, transporting by value only the C509 certificate of the RS.
 
 ~~~~~~~~~~~
    2.01 Created
@@ -607,7 +607,7 @@ This section provides additional examples where, within the same ACE execution w
 ~~~~~~~~~~~
 {: #fig-example-AS-to-C-c509 title="Access Token Response Example for Certificate Mode with a C509 Certificate as Authentication Credential of the RS, Transported by Value within \"rs_cnf\""}
 
-The following shows a variation of the two previous examples, where the certificates used as authentication credentials are instead identified by reference.
+The following shows a variation of the two previous examples, where certificates used as authentication credentials are instead identified by reference.
 
 {{fig-example-C-to-AS-x509-ref-2}} shows an example of Access Token Request from C to the AS. In the example, C specifies its authentication credential by means of an "x5t" structure, identifying by reference its X.509 certificate.
 
