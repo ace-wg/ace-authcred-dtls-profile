@@ -123,7 +123,7 @@ Also, the RPK mode and the certificate mode can be combined. That is, it is poss
 
 The effective provisioning of an authentication credential identified by reference builds on the assumption that the recipient is storing the authentication credential by value, or is able to retrieve it from a trusted source by means of the reference obtained. If that assumption does not hold, the authentication credential will have to be provided by value.
 
-The decision about whether providing authentication credentials by value or by reference in specific situations is left to application policies at C and the AS. Furthermore, C and AS could explicitly coordinate with each other about exchanging the authentication credentials of C and the RS as transported by value or instead identified by reference, e.g., by relying on the coordination method defined in {{I-D.ietf-ace-workflow-and-params}}.
+The decision about whether providing authentication credentials by value or by reference depending on the specific situation is left to application policies at C and the AS. Furthermore, C and AS could explicitly coordinate with each other about exchanging the authentication credentials of C and the RS as transported by value or instead identified by reference, e.g., by relying on the coordination method defined in {{I-D.ietf-ace-workflow-and-params}}.
 
 When using the formats introduced in this document, authentication credentials are specified by means of the CWT Confirmation Methods "kccs", "x5bag", "x5chain", "x5t", "x5u", "c5b", "c5c", "c5t", and "c5u" that are defined in {{I-D.ietf-ace-edhoc-oscore-profile}}.
 
