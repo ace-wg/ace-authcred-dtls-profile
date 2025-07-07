@@ -67,9 +67,9 @@ normative:
     author:
       org: NIST
     title: Secure Hash Standard
-    seriesinfo: FIPS 180-3
-    date: 2008-10
-    target: http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf
+    seriesinfo: NIST FIPS PUB 180-4, DOI 10.6028/NIST.FIPS.180-4
+    date: August 2015
+    target: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
 
 informative:
   RFC6091:
@@ -810,6 +810,8 @@ c5c = 26
 * Extended security considerations.
 
 * Updated CBOR abbreviations for a more efficient use of codepoints.
+
+* Updated references.
 
 * Editorial improvements.
 
