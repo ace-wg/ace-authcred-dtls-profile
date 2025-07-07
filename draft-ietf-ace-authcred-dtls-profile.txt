@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 27 December 2025                                   25 June 2025
+Expires: 8 January 2026                                      7 July 2025
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 December 2025.
+   This Internet-Draft will expire on 8 January 2026.
 
 Copyright Notice
 
@@ -795,9 +795,9 @@ Table of Contents
               Security for Constrained Environments (OSCORE) Profile for
               Authentication and Authorization for Constrained
               Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-07, 3 March 2025,
+              draft-ietf-ace-edhoc-oscore-profile-08, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-07>.
+              edhoc-oscore-profile-08>.
 
    [I-D.ietf-cose-cbor-encoded-cert]
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
@@ -943,9 +943,10 @@ Table of Contents
               DOI 10.17487/RFC9679, December 2024,
               <https://www.rfc-editor.org/rfc/rfc9679>.
 
-   [SHA-256]  NIST, "Secure Hash Standard", FIPS 180-3 , October 2008,
-              <http://csrc.nist.gov/publications/fips/fips180-3/
-              fips180-3_final.pdf>.
+   [SHA-256]  NIST, "Secure Hash Standard", NIST FIPS PUB 180-4, DOI
+              10.6028/NIST.FIPS.180-4 , August 2015,
+              <https://nvlpubs.nist.gov/nistpubs/FIPS/
+              NIST.FIPS.180-4.pdf>.
 
 6.2.  Informative References
 
@@ -1329,6 +1330,8 @@ C.1.  Version -01 to -02
    *  Extended security considerations.
 
    *  Updated CBOR abbreviations for a more efficient use of codepoints.
+
+   *  Updated references.
 
    *  Editorial improvements.
 
