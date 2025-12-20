@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 8 January 2026                                      7 July 2025
+Expires: 23 June 2026                                   20 December 2025
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2026.
+   This Internet-Draft will expire on 23 June 2026.
 
 Copyright Notice
 
@@ -90,8 +90,9 @@ Table of Contents
      A.3.  Combination of RPK Mode and Certificate Mode
    Appendix B.  CDDL Model
    Appendix C.  Document Updates
-     C.1.  Version -01 to -02
-     C.2.  Version -00 to -01
+     C.1.  Version -02 to -03
+     C.2.  Version -01 to -02
+     C.3.  Version -00 to -01
    Acknowledgments
    Authors' Addresses
 
@@ -131,7 +132,7 @@ Table of Contents
 
    That is, C specifies its public key to the AS when requesting an
    access token and the AS provides such public key to the target RS as
-   included in the issued access token.  Upon issuing the access token,
+   included in the issued access token.  When issuing the access token,
    the AS also provides C with the public key of the RS.  Then, C and
    the RS use their asymmetric keys when performing the DTLS handshake,
    as defined in [RFC7250].
@@ -139,14 +140,14 @@ Table of Contents
    Per [RFC9202], the DTLS profile admits only a COSE_Key object
    [RFC9052] as the format of authentication credentials to use for
    specifying the public keys of C and the RS as raw public keys.
-   However, it is desirable to enable additional formats of
-   authentication credentials, as enhanced raw public keys or as public
+   However, it is desirable that additional formats of authentication
+   credentials can be used, such as enhanced raw public keys or public
    key certificates.
 
-   This document enables such additional formats in the DTLS profile, by
-   defining how the public keys of C and the RS can be specified by
-   means of CBOR Web Token (CWT) Claims Sets (CCSs) [RFC8392], X.509
-   certificates [RFC5280], or C509 certificates
+   This document enables the use of such additional formats in the DTLS
+   profile, by defining how the public keys of C and the RS can be
+   specified by means of CBOR Web Token (CWT) Claims Sets (CCSs)
+   [RFC8392], X.509 certificates [RFC5280], or C509 certificates
    [I-D.ietf-cose-cbor-encoded-cert].
 
    This document also enables the DTLS profile to use the CWT
@@ -262,7 +263,7 @@ Table of Contents
    In the CBOR diagnostic notation used in this document, constructs of
    the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME
    in the CDDL model shown in Figure 19 of Appendix B.  For example,
-   {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.
+   {e'x5chain' : h'3081...cb02'} stands for {24 : h'3081...cb02'}.
 
    Note to RFC Editor: Please delete the paragraph immediately preceding
    this note.  Also, in the CBOR diagnostic notation used in this
@@ -287,7 +288,7 @@ Table of Contents
 
    *  The payload of the Access Token Request (see Section 5.8.1 of
       [RFC9200]) is as defined in Section 3.2.1 of [RFC9202], with the
-      difference that the "req_cnf" parameter [RFC9201] MUST specify a
+      difference that the "req_cnf" parameter [RFC9201] MUST contain a
       "kccs" structure, with value a CCS specifying the public key of C
       that has to be bound to the access token.
 
@@ -299,7 +300,7 @@ Table of Contents
    *  The content of the access token that the AS provides to C in the
       Access Token Response (see Section 5.8.2 of [RFC9200]) is as
       defined in Section 3.2.1 of [RFC9202], with the difference that
-      the "cnf" claim of the access token MUST specify a "kccs"
+      the "cnf" claim of the access token MUST contain a "kccs"
       structure, with value a CCS specifying the public key of C that is
       bound to the access token.
 
@@ -313,7 +314,7 @@ Table of Contents
 
    *  The payload of the Access Token Response is as defined in
       Section 3.2.1 of [RFC9202], with the difference that the "rs_cnf"
-      parameter [RFC9201] MUST specify a "kccs" structure, with value a
+      parameter [RFC9201] MUST contain a "kccs" structure, with value a
       CCS specifying the public key of the RS.
 
       In particular, the CCS MUST include the "cnf" claim specifying the
@@ -407,7 +408,7 @@ Table of Contents
    The following relies on the CWT Confirmation Method 'ckt' defined in
    [RFC9679].  When using a 'ckt' structure, this conveys the thumbprint
    of a COSE_Key object computed as per Section 3 of [RFC9679].  In
-   particular, the used hash function MUST be SHA-256 [SHA-256], which
+   particular, the hash function used MUST be SHA-256 [SHA-256], which
    is mandatory to support when supporting COSE Key thumbprints.
 
    If the raw public key of C is specified as a COSE_Key object
@@ -416,13 +417,13 @@ Table of Contents
 
    *  The payload of the Access Token Request (see Section 5.8.1 of
       [RFC9200]) is as defined in Section 3.2.1 of [RFC9202], with the
-      difference that the "req_cnf" parameter [RFC9201] MUST specify a
+      difference that the "req_cnf" parameter [RFC9201] MUST contain a
       "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
    *  The content of the access token that the AS provides to C in the
       Access Token Response (see Section 5.8.2 of [RFC9200]) is as
       defined in Section 3.2.1 of [RFC9202], with the difference that
-      the "cnf" claim of the access token MUST specify a "ckt"
+      the "cnf" claim of the access token MUST contain a "ckt"
       structure, with value the thumbprint of COSE_KEY_C.
 
    If the raw public key of the RS is specified as a COSE_Key object
@@ -431,7 +432,7 @@ Table of Contents
 
    *  The payload of the Access Token Response is as defined in
       Section 3.2.1 of [RFC9202], with the difference that the "rs_cnf"
-      parameter [RFC9201] MUST specify a "ckt" structure, with value the
+      parameter [RFC9201] MUST contain a "ckt" structure, with value the
       thumbprint of COSE_KEY_RS.
 
    When both public keys are specified as COSE_Key objects, it is
@@ -495,7 +496,7 @@ Table of Contents
    Section 3.2 of [RFC9202] and extended in Section 2 of this document,
    the certificate mode displays the differences compiled below.
 
-   The authentication credential of C and/or the RS is a public key
+   The authentication credential of C and/or of the RS is a public key
    certificate, i.e., an X.509 certificate [RFC5280] or a C509
    certificate [I-D.ietf-cose-cbor-encoded-cert].
 
@@ -514,7 +515,7 @@ Table of Contents
       Section 5.8.1 of [RFC9200]) specifies AUTH_CRED_C as follows.
 
       If AUTH_CRED_C is an X.509 certificate, the "req_cnf" parameter
-      MUST specify:
+      MUST contain:
 
       -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is
          transported by value within a certificate chain or a
@@ -525,7 +526,7 @@ Table of Contents
          [RFC3986], respectively.
 
       If AUTH_CRED_C is a C509 certificate, the "req_cnf" parameter MUST
-      specify:
+      contain:
 
       -  A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported
          by value within a certificate chain or a certificate bag,
@@ -540,7 +541,7 @@ Table of Contents
       specifies AUTH_CRED_C as follows.
 
       If AUTH_CRED_C is an X.509 certificate, the "cnf" claim MUST
-      specify:
+      contain:
 
       -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is
          transported by value within a certificate chain or a
@@ -551,7 +552,7 @@ Table of Contents
          [RFC3986], respectively.
 
       If AUTH_CRED_C is a C509 certificate, the "cnf" claim MUST
-      specify:
+      contain:
 
       -  A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported
          by value within a certificate chain or a certificate bag,
@@ -568,7 +569,7 @@ Table of Contents
       specifies AUTH_CRED_RS as follows.
 
       If AUTH_CRED_RS is an X.509 certificate, the "rs_cnf" parameter
-      MUST specify:
+      MUST contain:
 
       -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_RS is
          transported by value within a certificate chain or a
@@ -579,7 +580,7 @@ Table of Contents
          [RFC3986], respectively.
 
       If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter MUST
-      specify:
+      contain:
 
       -  A "c5c" or "c5b" structure, in case AUTH_CRED_RS is transported
          by value within a certificate chain or a certificate bag,
@@ -746,8 +747,8 @@ Table of Contents
       the security considerations from Appendix C.2 of [RFC8446] apply.
 
    *  When using X.509 certificates as authentication credentials, the
-      security considerations from [RFC5280], [RFC6818], [RFC9598],
-      [RFC9549], [RFC9608], and [RFC9618] apply.
+      security considerations from [RFC5280], [RFC6818], [RFC9549],
+      [RFC9598], [RFC9608], and [RFC9618] apply.
 
    *  When using C509 certificates as authentication credentials, the
       security considerations from [I-D.ietf-cose-cbor-encoded-cert]
@@ -756,7 +757,7 @@ Table of Contents
    Consistently with the ACE architecture, C and the RS securely obtain
    each others' authentication credential from the AS acting as trusted
    third party, i.e., through the Access Token Response sent to C and
-   the issued access token uploaded to the RS, respectively.
+   through the issued access token uploaded to the RS, respectively.
 
    Nevertheless, C and the RS are responsible for verifying the
    integrity and validity of obtained authentication credentials when
@@ -795,17 +796,17 @@ Table of Contents
               Security for Constrained Environments (OSCORE) Profile for
               Authentication and Authorization for Constrained
               Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-08, 7 July 2025,
+              draft-ietf-ace-edhoc-oscore-profile-09, 20 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-08>.
+              edhoc-oscore-profile-09>.
 
    [I-D.ietf-cose-cbor-encoded-cert]
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-14, 23 June 2025,
+              ietf-cose-cbor-encoded-cert-15, 18 August 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-14>.
+              cbor-encoded-cert-15>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -955,9 +956,9 @@ Table of Contents
               (SDC) Workflow and New OAuth Parameters for the
               Authentication and Authorization for Constrained
               Environments (ACE) Framework", Work in Progress, Internet-
-              Draft, draft-ietf-ace-workflow-and-params-04, 3 March
+              Draft, draft-ietf-ace-workflow-and-params-06, 20 October
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              ace-workflow-and-params-04>.
+              ace-workflow-and-params-06>.
 
    [RFC6091]  Mavrogiannopoulos, N. and D. Gillmor, "Using OpenPGP Keys
               for Transport Layer Security (TLS) Authentication",
@@ -1319,7 +1320,11 @@ Appendix C.  Document Updates
 
    This section is to be removed before publishing as an RFC.
 
-C.1.  Version -01 to -02
+C.1.  Version -02 to -03
+
+   *  Editorial fixes and improvements.
+
+C.2.  Version -01 to -02
 
    *  Considerations on providing credentials by value or by reference.
 
@@ -1335,7 +1340,7 @@ C.1.  Version -01 to -02
 
    *  Editorial improvements.
 
-C.2.  Version -00 to -01
+C.3.  Version -00 to -01
 
    *  Enabled use of COSE Keys identified by reference with a
       thumbprint.
