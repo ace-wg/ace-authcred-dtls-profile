@@ -97,11 +97,11 @@ Separate profile documents define in detail how the participants in the ACE arch
 
 The DTLS profile defined in {{RFC9202}} allows C and the RS to establish a DTLS session with peer authentication based on symmetric or asymmetric cryptography. For the latter case, the profile defines a Raw Public Key (RPK) mode (see {{Section 3.2 of RFC9202}}), where authentication relies on the public keys of the two peers as raw public keys {{RFC7250}}.
 
-That is, C specifies its public key to the AS when requesting an access token and the AS provides such public key to the target RS as included in the issued access token. Upon issuing the access token, the AS also provides C with the public key of the RS. Then, C and the RS use their asymmetric keys when performing the DTLS handshake, as defined in {{RFC7250}}.
+That is, C specifies its public key to the AS when requesting an access token and the AS provides such public key to the target RS as included in the issued access token. When issuing the access token, the AS also provides C with the public key of the RS. Then, C and the RS use their asymmetric keys when performing the DTLS handshake, as defined in {{RFC7250}}.
 
-Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for specifying the public keys of C and the RS as raw public keys. However, it is desirable to enable additional formats of authentication credentials, as enhanced raw public keys or as public key certificates.
+Per {{RFC9202}}, the DTLS profile admits only a COSE_Key object {{RFC9052}} as the format of authentication credentials to use for specifying the public keys of C and the RS as raw public keys. However, it is desirable that additional formats of authentication credentials can be used, such as enhanced raw public keys or public key certificates.
 
-This document enables such additional formats in the DTLS profile, by defining how the public keys of C and the RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
+This document enables the use of such additional formats in the DTLS profile, by defining how the public keys of C and the RS can be specified by means of CBOR Web Token (CWT) Claims Sets (CCSs) {{RFC8392}}, X.509 certificates {{RFC5280}}, or C509 certificates {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 This document also enables the DTLS profile to use the CWT Confirmation Method 'ckt' defined in {{RFC9679}} when using a COSE_Key object for specifying a raw public key, thus allowing to identifying the COSE_Key object by reference alternatively to transporting it by value.
 
@@ -145,7 +145,7 @@ This document also refers to the term "authentication credential", which denotes
 
 Examples throughout this document are expressed in CBOR diagnostic notation as defined in {{Section 8 of RFC8949}} and {{Appendix G of RFC8610}}. Diagnostic notation comments are often used to provide a textual representation of the parameters' keys and values.
 
-In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. For example, {e'x5chain' : h'3081...cb02'} stands for {6 : h'3081...cb02'}.
+In the CBOR diagnostic notation used in this document, constructs of the form e'SOME_NAME' are replaced by the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. For example, {e'x5chain' : h'3081...cb02'} stands for {24 : h'3081...cb02'}.
 
 Note to RFC Editor: Please delete the paragraph immediately preceding this note. Also, in the CBOR diagnostic notation used in this document, please replace the constructs of the form e'SOME_NAME' with the value assigned to SOME_NAME in the CDDL model shown in {{fig-cddl-model}} of {{sec-cddl-model}}. Finally, please delete this note.
 
@@ -159,17 +159,17 @@ This section defines how the raw public key of C and the RS can be provided as w
 
 If the raw public key of C is wrapped by a CCS, then the following applies.
 
-* The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.
+* The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST contain a "kccs" structure, with value a CCS specifying the public key of C that has to be bound to the access token.
 
   In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
 
-* The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST specify a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.
+* The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST contain a "kccs" structure, with value a CCS specifying the public key of C that is bound to the access token.
 
   In particular, the CCS MUST include the "cnf" claim specifying the public key of C as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of C associated with the public key of C, and MAY include additional claims.
 
 If the raw public key of the RS is wrapped by a CCS, then the following applies.
 
-* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "kccs" structure, with value a CCS specifying the public key of the RS.
+* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST contain a "kccs" structure, with value a CCS specifying the public key of the RS.
 
   In particular, the CCS MUST include the "cnf" claim specifying the public key of the RS as a COSE_Key object, SHOULD include the "sub" claim specifying the subject name of the RS associated with the public key of the RS, and MAY include additional claims.
 
@@ -244,17 +244,17 @@ As per {{Section 3.2 of RFC9202}}, COSE_Key objects {{RFC9052}} used for specify
 
 This section extends the DTLS profile by allowing to identifying those COSE_Key objects by reference, alternatively to transporting those by value. Note that only the differences from {{RFC9202}} are compiled below.
 
-The following relies on the CWT Confirmation Method 'ckt' defined in {{RFC9679}}. When using a 'ckt' structure, this conveys the thumbprint of a COSE_Key object computed as per {{Section 3 of RFC9679}}. In particular, the used hash function MUST be SHA-256 {{SHA-256}}, which is mandatory to support when supporting COSE Key thumbprints.
+The following relies on the CWT Confirmation Method 'ckt' defined in {{RFC9679}}. When using a 'ckt' structure, this conveys the thumbprint of a COSE_Key object computed as per {{Section 3 of RFC9679}}. In particular, the hash function used MUST be SHA-256 {{SHA-256}}, which is mandatory to support when supporting COSE Key thumbprints.
 
 If the raw public key of C is specified as a COSE_Key object COSE_KEY_C and the intent is to identify it by reference, then the following applies.
 
-* The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
+* The payload of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "req_cnf" parameter {{RFC9201}} MUST contain a "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
-* The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_C.
+* The content of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "cnf" claim of the access token MUST contain a "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
 If the raw public key of the RS is specified as a COSE_Key object COSE_KEY_RS and the intent is to identify it by reference, then the following applies.
 
-* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST specify a "ckt" structure, with value the thumbprint of COSE_KEY_RS.
+* The payload of the Access Token Response is as defined in {{Section 3.2.1 of RFC9202}}, with the difference that the "rs_cnf" parameter {{RFC9201}} MUST contain a "ckt" structure, with value the thumbprint of COSE_KEY_RS.
 
 When both public keys are specified as COSE_Key objects, it is possible to have both transported by value, or both identified by reference, or one transported by value while the other one identified by reference.
 
@@ -303,7 +303,7 @@ Note that the use of COSE Key thumbprints per {{RFC9679}} is applicable only to 
 
 This section defines a new certificate mode of the DTLS profile, which enables the use of public key certificates to specify the public keys of C and the RS. Compared to the RPK mode defined in {{Section 3.2 of RFC9202}} and extended in {{sec-rpk-mode}} of this document, the certificate mode displays the differences compiled below.
 
-The authentication credential of C and/or the RS is a public key certificate, i.e., an X.509 certificate {{RFC5280}} or a C509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
+The authentication credential of C and/or of the RS is a public key certificate, i.e., an X.509 certificate {{RFC5280}} or a C509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 * The CWT Confirmation Methods "x5chain", "x5bag", "c5c", and "c5b" defined in {{I-D.ietf-ace-edhoc-oscore-profile}} are used to transport such authentication credentials by value.
 
@@ -313,13 +313,13 @@ If the authentication credential AUTH_CRED_C of C is a public key certificate, t
 
 - The "req_cnf" parameter {{RFC9201}} of the Access Token Request (see {{Section 5.8.1 of RFC9200}}) specifies AUTH_CRED_C as follows.
 
-  If AUTH_CRED_C is an X.509 certificate, the "req_cnf" parameter MUST specify:
+  If AUTH_CRED_C is an X.509 certificate, the "req_cnf" parameter MUST contain:
 
   - An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or
 
   - An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI {{RFC3986}}, respectively.
 
-  If AUTH_CRED_C is a C509 certificate, the "req_cnf" parameter MUST specify:
+  If AUTH_CRED_C is a C509 certificate, the "req_cnf" parameter MUST contain:
 
   - A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or
 
@@ -327,13 +327,13 @@ If the authentication credential AUTH_CRED_C of C is a public key certificate, t
 
 - The "cnf" claim of the access token that the AS provides to C in the Access Token Response (see {{Section 5.8.2 of RFC9200}}) specifies AUTH_CRED_C as follows.
 
-  If AUTH_CRED_C is an X.509 certificate, the "cnf" claim MUST specify:
+  If AUTH_CRED_C is an X.509 certificate, the "cnf" claim MUST contain:
 
   - An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or
 
   - An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified by reference through a hash value (a thumbprint) or a URI {{RFC3986}}, respectively.
 
-  If AUTH_CRED_C is a C509 certificate, the "cnf" claim MUST specify:
+  If AUTH_CRED_C is a C509 certificate, the "cnf" claim MUST contain:
 
   - A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported by value within a certificate chain or a certificate bag, respectively; or
 
@@ -343,13 +343,13 @@ If the authentication credential AUTH_CRED_RS of the RS is a public key certific
 
 - The "rs_cnf" parameter {{RFC9201}} of the Access Token Response specifies AUTH_CRED_RS as follows.
 
-  If AUTH_CRED_RS is an X.509 certificate, the "rs_cnf" parameter MUST specify:
+  If AUTH_CRED_RS is an X.509 certificate, the "rs_cnf" parameter MUST contain:
 
   - An "x5chain" or "x5bag" structure, in case AUTH_CRED_RS is transported by value within a certificate chain or a certificate bag, respectively; or
 
   - An "x5t" or "x5u" structure, in case AUTH_CRED_RS is identified by reference through a hash value (a thumbprint) or a URI {{RFC3986}}, respectively.
 
-  If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter MUST specify:
+  If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter MUST contain:
 
   - A "c5c" or "c5b" structure, in case AUTH_CRED_RS is transported by value within a certificate chain or a certificate bag, respectively; or
 
@@ -475,11 +475,11 @@ The security considerations from {{RFC9200}} and {{RFC9202}} apply to this docum
 
 * When using public key certificates as authentication credentials, the security considerations from {{Section C.2 of RFC8446}} apply.
 
-* When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9598}}, {{RFC9549}}, {{RFC9608}}, and {{RFC9618}} apply.
+* When using X.509 certificates as authentication credentials, the security considerations from {{RFC5280}}, {{RFC6818}}, {{RFC9549}}, {{RFC9598}}, {{RFC9608}}, and {{RFC9618}} apply.
 
 * When using C509 certificates as authentication credentials, the security considerations from {{I-D.ietf-cose-cbor-encoded-cert}} apply.
 
-Consistently with the ACE architecture, C and the RS securely obtain each others' authentication credential from the AS acting as trusted third party, i.e., through the Access Token Response sent to C and the issued access token uploaded to the RS, respectively.
+Consistently with the ACE architecture, C and the RS securely obtain each others' authentication credential from the AS acting as trusted third party, i.e., through the Access Token Response sent to C and through the issued access token uploaded to the RS, respectively.
 
 Nevertheless, C and the RS are responsible for verifying the integrity and validity of obtained authentication credentials when those are CCSs or public key certificates as defined in this document.
 
@@ -798,6 +798,10 @@ c5c = 26
 
 # Document Updates # {#sec-document-updates}
 {:removeinrfc}
+
+## Version -02 to -03 ## {#sec-02-03}
+
+* Editorial fixes and improvements.
 
 ## Version -01 to -02 ## {#sec-01-02}
 
