@@ -6,7 +6,7 @@ ACE Working Group                                              M. Tiloca
 Internet-Draft                                                   RISE AB
 Updates: 9202 (if approved)                            J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 23 June 2026                                   20 December 2025
+Expires: 30 December 2026                                   28 June 2026
 
 
    Additional Formats of Authentication Credentials for the Datagram
@@ -23,7 +23,8 @@ Abstract
    DTLS session, when peer authentication is based on asymmetric
    cryptography.  Therefore, this document updates RFC 9202.  What is
    defined in this document is seamlessly applicable also if the profile
-   uses Transport Layer Security (TLS) instead, as defined in RFC 9430.
+   uses Transport Layer Security (TLS) instead of DTLS, as defined in
+   RFC 9430.
 
 Discussion Venues
 
@@ -52,11 +53,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 June 2026.
+   This Internet-Draft will expire on 30 December 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -72,6 +73,7 @@ Table of Contents
 
    1.  Introduction
      1.1.  Terminology
+     1.2.  Notations
    2.  Updates to the RPK Mode
      2.1.  Raw Public Keys as CCSs
        2.1.1.  Examples
@@ -90,9 +92,10 @@ Table of Contents
      A.3.  Combination of RPK Mode and Certificate Mode
    Appendix B.  CDDL Model
    Appendix C.  Document Updates
-     C.1.  Version -02 to -03
-     C.2.  Version -01 to -02
-     C.3.  Version -00 to -01
+     C.1.  Version -03 to -04
+     C.2.  Version -02 to -03
+     C.3.  Version -01 to -02
+     C.4.  Version -00 to -01
    Acknowledgments
    Authors' Addresses
 
@@ -205,8 +208,8 @@ Table of Contents
 
    The decision about whether providing authentication credentials by
    value or by reference depending on the specific situation is left to
-   application policies at C and the AS.  Furthermore, C and AS could
-   explicitly coordinate with each other about exchanging the
+   application policies at C and the AS.  Furthermore, C and the AS
+   could explicitly coordinate with each other about exchanging the
    authentication credentials of C and the RS as transported by value or
    instead identified by reference, e.g., by relying on the coordination
    method defined in [I-D.ietf-ace-workflow-and-params].
@@ -217,7 +220,7 @@ Table of Contents
    "c5u" that are defined in [I-D.ietf-ace-edhoc-oscore-profile].
 
    What is defined in this document is seamlessly applicable if TLS is
-   used instead, as defined in [RFC9430].
+   used instead of DTLS, as defined in [RFC9430].
 
 1.1.  Terminology
 
@@ -255,6 +258,8 @@ Table of Contents
    (CCSs) [RFC8392], X.509 certificates [RFC5280], and C509 certificates
    [I-D.ietf-cose-cbor-encoded-cert].
 
+1.2.  Notations
+
    Examples throughout this document are expressed in CBOR diagnostic
    notation as defined in Section 8 of [RFC8949] and Appendix G of
    [RFC8610].  Diagnostic notation comments are often used to provide a
@@ -286,7 +291,7 @@ Table of Contents
    If the raw public key of C is wrapped by a CCS, then the following
    applies.
 
-   *  The payload of the Access Token Request (see Section 5.8.1 of
+   *  The payload of the access token request (see Section 5.8.1 of
       [RFC9200]) is as defined in Section 3.2.1 of [RFC9202], with the
       difference that the "req_cnf" parameter [RFC9201] MUST contain a
       "kccs" structure, with value a CCS specifying the public key of C
@@ -298,7 +303,7 @@ Table of Contents
       key of C, and MAY include additional claims.
 
    *  The content of the access token that the AS provides to C in the
-      Access Token Response (see Section 5.8.2 of [RFC9200]) is as
+      access token response (see Section 5.8.2 of [RFC9200]) is as
       defined in Section 3.2.1 of [RFC9202], with the difference that
       the "cnf" claim of the access token MUST contain a "kccs"
       structure, with value a CCS specifying the public key of C that is
@@ -312,7 +317,7 @@ Table of Contents
    If the raw public key of the RS is wrapped by a CCS, then the
    following applies.
 
-   *  The payload of the Access Token Response is as defined in
+   *  The payload of the access token response is as defined in
       Section 3.2.1 of [RFC9202], with the difference that the "rs_cnf"
       parameter [RFC9201] MUST contain a "kccs" structure, with value a
       CCS specifying the public key of the RS.
@@ -322,8 +327,8 @@ Table of Contents
       "sub" claim specifying the subject name of the RS associated with
       the public key of the RS, and MAY include additional claims.
 
-   For the "req_cnf" parameter of the Access Token Request, the "rs_cnf"
-   parameter of the Access Token Response, and the "cnf" claim of the
+   For the "req_cnf" parameter of the access token request, the "rs_cnf"
+   parameter of the access token response, and the "cnf" claim of the
    access token, the Confirmation Method "kccs" structure and its
    identifier are defined in [I-D.ietf-ace-edhoc-oscore-profile].
 
@@ -335,7 +340,7 @@ Table of Contents
 
 2.1.1.  Examples
 
-   Figure 1 shows an example of Access Token Request from C to the AS.
+   Figure 1 shows an example of access token request from C to the AS.
 
       POST coaps://as.example.com/token
       Content-Format: 19 (application/ace+cbor)
@@ -363,7 +368,7 @@ Table of Contents
        Figure 1: Access Token Request Example for RPK Mode, with the
          Public Key of C Wrapped by a CCS Conveyed within "req_cnf"
 
-   Figure 2 shows an example of Access Token Response from the AS to C.
+   Figure 2 shows an example of access token response from the AS to C.
 
       2.01 Created
       Content-Format: 19 (application/ace+cbor)
@@ -397,8 +402,8 @@ Table of Contents
 2.2.  Raw Public Keys as COSE_Keys Identified by Reference
 
    As per Section 3.2 of [RFC9202], COSE_Key objects [RFC9052] used for
-   specifying raw public keys are transported by value in the Access
-   Token Request and Response messages, as well as within access tokens.
+   specifying raw public keys are transported by value in the access
+   token request and response messages, as well as within access tokens.
 
    This section extends the DTLS profile by allowing to identifying
    those COSE_Key objects by reference, alternatively to transporting
@@ -415,13 +420,13 @@ Table of Contents
    COSE_KEY_C and the intent is to identify it by reference, then the
    following applies.
 
-   *  The payload of the Access Token Request (see Section 5.8.1 of
+   *  The payload of the access token request (see Section 5.8.1 of
       [RFC9200]) is as defined in Section 3.2.1 of [RFC9202], with the
       difference that the "req_cnf" parameter [RFC9201] MUST contain a
       "ckt" structure, with value the thumbprint of COSE_KEY_C.
 
    *  The content of the access token that the AS provides to C in the
-      Access Token Response (see Section 5.8.2 of [RFC9200]) is as
+      access token response (see Section 5.8.2 of [RFC9200]) is as
       defined in Section 3.2.1 of [RFC9202], with the difference that
       the "cnf" claim of the access token MUST contain a "ckt"
       structure, with value the thumbprint of COSE_KEY_C.
@@ -430,7 +435,7 @@ Table of Contents
    COSE_KEY_RS and the intent is to identify it by reference, then the
    following applies.
 
-   *  The payload of the Access Token Response is as defined in
+   *  The payload of the access token response is as defined in
       Section 3.2.1 of [RFC9202], with the difference that the "rs_cnf"
       parameter [RFC9201] MUST contain a "ckt" structure, with value the
       thumbprint of COSE_KEY_RS.
@@ -449,7 +454,7 @@ Table of Contents
 
 2.2.1.  Examples
 
-   Figure 3 shows an example of Access Token Request from C to the AS.
+   Figure 3 shows an example of access token request from C to the AS.
 
       POST coaps://as.example.com/token
       Content-Format: 19 (application/ace+cbor)
@@ -467,7 +472,7 @@ Table of Contents
         Public Key of C Specified as a COSE_Key Object Identified by
                          Reference within "req_cnf"
 
-   Figure 4 shows an example of Access Token Response from the AS to C.
+   Figure 4 shows an example of access token response from the AS to C.
 
       2.01 Created
       Content-Format: 19 (application/ace+cbor)
@@ -511,87 +516,87 @@ Table of Contents
    If the authentication credential AUTH_CRED_C of C is a public key
    certificate, then the following applies.
 
-   *  The "req_cnf" parameter [RFC9201] of the Access Token Request (see
+   *  The "req_cnf" parameter [RFC9201] of the access token request (see
       Section 5.8.1 of [RFC9200]) specifies AUTH_CRED_C as follows.
 
       If AUTH_CRED_C is an X.509 certificate, the "req_cnf" parameter
       MUST contain:
 
-      -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is
+      -  An "x5chain" or "x5bag" structure, if AUTH_CRED_C is
          transported by value within a certificate chain or a
          certificate bag, respectively; or
 
-      -  An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  An "x5t" or "x5u" structure, if AUTH_CRED_C is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
       If AUTH_CRED_C is a C509 certificate, the "req_cnf" parameter MUST
       contain:
 
-      -  A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported
-         by value within a certificate chain or a certificate bag,
+      -  A "c5c" or "c5b" structure, if AUTH_CRED_C is transported by
+         value within a certificate chain or a certificate bag,
          respectively; or
 
-      -  A "c5t" or "c5u" structure, in case AUTH_CRED_C is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  A "c5t" or "c5u" structure, if AUTH_CRED_C is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
    *  The "cnf" claim of the access token that the AS provides to C in
-      the Access Token Response (see Section 5.8.2 of [RFC9200])
+      the access token response (see Section 5.8.2 of [RFC9200])
       specifies AUTH_CRED_C as follows.
 
       If AUTH_CRED_C is an X.509 certificate, the "cnf" claim MUST
       contain:
 
-      -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_C is
+      -  An "x5chain" or "x5bag" structure, if AUTH_CRED_C is
          transported by value within a certificate chain or a
          certificate bag, respectively; or
 
-      -  An "x5t" or "x5u" structure, in case AUTH_CRED_C is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  An "x5t" or "x5u" structure, if AUTH_CRED_C is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
       If AUTH_CRED_C is a C509 certificate, the "cnf" claim MUST
       contain:
 
-      -  A "c5c" or "c5b" structure, in case AUTH_CRED_C is transported
-         by value within a certificate chain or a certificate bag,
+      -  A "c5c" or "c5b" structure, if AUTH_CRED_C is transported by
+         value within a certificate chain or a certificate bag,
          respectively; or
 
-      -  A "c5t" or "c5u" structure, in case AUTH_CRED_C is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  A "c5t" or "c5u" structure, if AUTH_CRED_C is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
    If the authentication credential AUTH_CRED_RS of the RS is a public
    key certificate, then the following applies.
 
-   *  The "rs_cnf" parameter [RFC9201] of the Access Token Response
+   *  The "rs_cnf" parameter [RFC9201] of the access token response
       specifies AUTH_CRED_RS as follows.
 
       If AUTH_CRED_RS is an X.509 certificate, the "rs_cnf" parameter
       MUST contain:
 
-      -  An "x5chain" or "x5bag" structure, in case AUTH_CRED_RS is
+      -  An "x5chain" or "x5bag" structure, if AUTH_CRED_RS is
          transported by value within a certificate chain or a
          certificate bag, respectively; or
 
-      -  An "x5t" or "x5u" structure, in case AUTH_CRED_RS is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  An "x5t" or "x5u" structure, if AUTH_CRED_RS is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
       If AUTH_CRED_RS is a C509 certificate, the "rs_cnf" parameter MUST
       contain:
 
-      -  A "c5c" or "c5b" structure, in case AUTH_CRED_RS is transported
-         by value within a certificate chain or a certificate bag,
+      -  A "c5c" or "c5b" structure, if AUTH_CRED_RS is transported by
+         value within a certificate chain or a certificate bag,
          respectively; or
 
-      -  A "c5t" or "c5u" structure, in case AUTH_CRED_RS is identified
-         by reference through a hash value (a thumbprint) or a URI
+      -  A "c5t" or "c5u" structure, if AUTH_CRED_RS is identified by
+         reference through a hash value (a thumbprint) or a URI
          [RFC3986], respectively.
 
-   For the "req_cnf" parameter of the Access Token Request, the "rs_cnf"
-   parameter of the Access Token Response, and the "cnf" claim of the
+   For the "req_cnf" parameter of the access token request, the "rs_cnf"
+   parameter of the access token response, and the "cnf" claim of the
    access token, the structures "x5bag", "x5chain", "x5t", "x5u", "c5b",
    "c5c", "c5t", and "c5u" are defined in
    [I-D.ietf-ace-edhoc-oscore-profile], together with their identifiers.
@@ -617,7 +622,7 @@ Table of Contents
 
 3.1.  Examples
 
-   Figure 5 shows an example of Access Token Request from C to the AS.
+   Figure 5 shows an example of access token request from C to the AS.
    In the example, C specifies its authentication credential by means of
    an "x5chain" structure, transporting by value only its X.509
    certificate.
@@ -650,7 +655,7 @@ Table of Contents
           an X.509 Certificate as Authentication Credential of C,
                    Transported by Value within "req_cnf"
 
-   Figure 6 shows an example of Access Token Response from the AS to C.
+   Figure 6 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of an "x5chain" structure, transporting by value only the
    X.509 certificate of the RS.
@@ -690,7 +695,7 @@ Table of Contents
    X.509 certificates used as authentication credentials are instead
    identified by reference.
 
-   Figure 7 shows an example of Access Token Request from C to the AS.
+   Figure 7 shows an example of access token request from C to the AS.
    In the example, C specifies its authentication credential by means of
    an "x5t" structure, identifying by reference its X.509 certificate.
 
@@ -710,7 +715,7 @@ Table of Contents
           an X.509 Certificate as Authentication Credential of C,
                   Identified by Reference within "req_cnf"
 
-   Figure 8 shows an example of Access Token Response from the AS to C.
+   Figure 8 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of an "x5t" structure, identifying by reference the X.509
    certificate of the RS.
@@ -754,9 +759,9 @@ Table of Contents
       security considerations from [I-D.ietf-cose-cbor-encoded-cert]
       apply.
 
-   Consistently with the ACE architecture, C and the RS securely obtain
+   Consistent with the ACE architecture, C and the RS securely obtain
    each others' authentication credential from the AS acting as trusted
-   third party, i.e., through the Access Token Response sent to C and
+   third party, i.e., through the access token response sent to C and
    through the issued access token uploaded to the RS, respectively.
 
    Nevertheless, C and the RS are responsible for verifying the
@@ -796,17 +801,17 @@ Table of Contents
               Security for Constrained Environments (OSCORE) Profile for
               Authentication and Authorization for Constrained
               Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-09, 20 October 2025,
+              draft-ietf-ace-edhoc-oscore-profile-10, 1 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-09>.
+              edhoc-oscore-profile-10>.
 
    [I-D.ietf-cose-cbor-encoded-cert]
-              Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
-              M. Furuhed, "CBOR Encoded X.509 Certificates (C509
-              Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-15, 18 August 2025,
+              Mattsson, J. P., Selander, G., Raza, S., Höglund, J.,
+              Furuhed, M., and L. Liao, "CBOR Encoded X.509 Certificates
+              (C509 Certificates)", Work in Progress, Internet-Draft,
+              draft-ietf-cose-cbor-encoded-cert-19, 11 May 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-15>.
+              cbor-encoded-cert-19>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -956,9 +961,9 @@ Table of Contents
               (SDC) Workflow and New OAuth Parameters for the
               Authentication and Authorization for Constrained
               Environments (ACE) Framework", Work in Progress, Internet-
-              Draft, draft-ietf-ace-workflow-and-params-06, 20 October
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              ace-workflow-and-params-06>.
+              Draft, draft-ietf-ace-workflow-and-params-07, 2 March
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              ace-workflow-and-params-07>.
 
    [RFC6091]  Mavrogiannopoulos, N. and D. Gillmor, "Using OpenPGP Keys
               for Transport Layer Security (TLS) Authentication",
@@ -986,7 +991,7 @@ Appendix A.  Examples with Hybrid Settings
 
 A.1.  RPK Mode (Raw Public Keys of Different Formats)
 
-   Figure 9 shows an example of Access Token Request from C to the AS,
+   Figure 9 shows an example of access token request from C to the AS,
    where the public key of C is conveyed as a COSE Key.
 
       POST coaps://as.example.com/token
@@ -1010,7 +1015,7 @@ A.1.  RPK Mode (Raw Public Keys of Different Formats)
        Figure 9: Access Token Request Example for RPK Mode, with the
           Public Key of C Conveyed as a COSE Key within "req_cnf"
 
-   Figure 10 shows an example of Access Token Response from the AS to C,
+   Figure 10 shows an example of access token response from the AS to C,
    where the public key of the RS is wrapped by a CCS.
 
       2.01 Created
@@ -1044,7 +1049,7 @@ A.1.  RPK Mode (Raw Public Keys of Different Formats)
 
 A.2.  Certificate Mode (Certificates of Different Formats)
 
-   Figure 11 shows an example of Access Token Request from C to the AS.
+   Figure 11 shows an example of access token request from C to the AS.
    In the example, C specifies its authentication credential by means of
    an "x5chain" structure, transporting by value only its X.509
    certificate.
@@ -1081,7 +1086,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
           an X.509 Certificate as Authentication Credential of C,
                    Transported by Value within "req_cnf"
 
-   Figure 12 shows an example of Access Token Response from the AS to C.
+   Figure 12 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of a "c5c" structure, transporting by value only the C509
    certificate of the RS.
@@ -1123,7 +1128,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
    certificates used as authentication credentials are instead
    identified by reference.
 
-   Figure 13 shows an example of Access Token Request from C to the AS.
+   Figure 13 shows an example of access token request from C to the AS.
    In the example, C specifies its authentication credential by means of
    an "x5t" structure, identifying by reference its X.509 certificate.
 
@@ -1143,7 +1148,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
           an X.509 Certificate as Authentication Credential of C,
                   Identified by Reference within "req_cnf"
 
-   Figure 14 shows an example of Access Token Response from the AS to C.
+   Figure 14 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of a "c5t" structure, identifying by reference the C509
    certificate of the RS.
@@ -1169,7 +1174,7 @@ A.2.  Certificate Mode (Certificates of Different Formats)
 
 A.3.  Combination of RPK Mode and Certificate Mode
 
-   Figure 15 shows an example of Access Token Request from C to the AS,
+   Figure 15 shows an example of access token request from C to the AS,
    where the public key of C is wrapped by a CCS.
 
       POST coaps://as.example.com/token
@@ -1198,7 +1203,7 @@ A.3.  Combination of RPK Mode and Certificate Mode
        Figure 15: Access Token Request Example for RPK Mode, with the
              Public Key of C Wrapped by a CCS within "req_cnf"
 
-   Figure 16 shows an example of Access Token Response from the AS to C.
+   Figure 16 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of an "x5chain" structure, transporting by value only the
    X.509 certificate of the RS.
@@ -1258,7 +1263,7 @@ A.3.  Combination of RPK Mode and Certificate Mode
    COSE_Key Object and the other authentication credential is an X.509
    certificate, with both credentials identified by reference.
 
-   Figure 17 shows an example of Access Token Request from C to the AS.
+   Figure 17 shows an example of access token request from C to the AS.
    In the example, C specifies its authentication credential by means of
    a "ckt" structure, identifying by reference the COSE_Key Object that
    specifies its public key.
@@ -1279,7 +1284,7 @@ A.3.  Combination of RPK Mode and Certificate Mode
         Public Key of C Specified as a COSE_Key Object Identified by
                          Reference within "req_cnf"
 
-   Figure 18 shows an example of Access Token Response from the AS to C.
+   Figure 18 shows an example of access token response from the AS to C.
    In the example, the AS specifies the authentication credential of the
    RS by means of an "x5t" structure, identifying by reference the X.509
    certificate of the RS.
@@ -1320,11 +1325,15 @@ Appendix C.  Document Updates
 
    This section is to be removed before publishing as an RFC.
 
-C.1.  Version -02 to -03
+C.1.  Version -03 to -04
 
    *  Editorial fixes and improvements.
 
-C.2.  Version -01 to -02
+C.2.  Version -02 to -03
+
+   *  Editorial fixes and improvements.
+
+C.3.  Version -01 to -02
 
    *  Considerations on providing credentials by value or by reference.
 
@@ -1340,7 +1349,7 @@ C.2.  Version -01 to -02
 
    *  Editorial improvements.
 
-C.3.  Version -00 to -01
+C.4.  Version -00 to -01
 
    *  Enabled use of COSE Keys identified by reference with a
       thumbprint.
